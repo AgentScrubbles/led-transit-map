@@ -1,0 +1,11 @@
+certifi==2024.7.4
+charset-normalizer==3.3.2
+gtfs-realtime-bindings==1.0.0
+idna==3.8
+long==0.0.1
+protobuf==5.27.3
+protobuf-to-dict==0.1.0
+protobuf3-to-dict==0.1.5
+requests==2.32.3
+six==1.16.0
+urllib3==2.2.2
