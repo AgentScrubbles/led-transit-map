@@ -1,6 +1,6 @@
 
 from transit import TransitFeed, Route, Vehicle, Stop, Trip
-from strip_config import LightStop
+from strip_config import LightStop, StripConfig
 import os
 import time
 
@@ -29,7 +29,7 @@ strip = [
     LightStop(t.GetStop(605), 9),
 ]
 
-
+strip = StripConfig(strip)
 
 def printStops(stopArr):
     str = '['
@@ -54,6 +54,8 @@ while(True):
             direction1 = trip
 
     vehicles: list[Vehicle] = route.GetVehicles()
+
+    strip.calculate_strip(vehicles)
 
     direction0Occupied = {}
     direction1Occupied = {}

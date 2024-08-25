@@ -68,13 +68,17 @@ class StripConfig:
         counter = 0
         while (counter < self.stops[-1].light_index):
             stop_light = self.stops_by_light_id.get(counter)
+            counter += 1
             if stop_light is None:
                 status.append(Light(LightStatus.EMPTY))
             else:
                 status.append(Light(LightStatus.STATION))
 
         for vehicle in vehicles:
-            stop: LightStop = self.stops_by_stop_id[vehicle.stop_id]
+            stop: LightStop = self.stops_by_stop_id.get(vehicle.stop_id)
+            if (stop is None):
+                # This can happen because the stop is out of range of our strip
+                continue
             if (stop.is_vehicle_in_stop(vehicle)):
                 status[stop.light_index] = Light(LightStatus.OCCUPIED)
             else:
