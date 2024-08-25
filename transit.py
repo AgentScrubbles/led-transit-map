@@ -221,8 +221,11 @@ class TransitFeed:
 
         print('...Stops')
         stops_pd = pd.read_csv(self.local_static_url+'/stops.txt', sep=',')
-        self.stops = []
+        self.stops = {}
         for index, row in stops_pd.iterrows():
             stop = Stop(row)
-            self.stops.append(stop)
+            self.stops[stop.id] = stop
         print_stopwatch(time.time() - start_time, 'Static GTFS feed parsed')
+
+    def GetStop(self, stop_id):
+        return self.stops.get(stop_id)

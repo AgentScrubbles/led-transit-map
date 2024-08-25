@@ -1,5 +1,6 @@
 
 from transit import TransitFeed, Route, Vehicle, Stop, Trip
+from strip_config import LightStop
 import os
 import time
 
@@ -9,16 +10,20 @@ local_path = '/tmp/gtfs'
 
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
+
 t = TransitFeed(static_url, realtime_url, local_path)
 
-# t.GetStaticFeed()
+
+t.GetStaticFeed()
 t.ParseStaticFeed()
 
 
 
 # stops = route.GetOrderedStops()
 
-
+strip = [
+    LightStop(t.GetStop(123))
+]
 
 
 
