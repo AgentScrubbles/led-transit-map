@@ -89,6 +89,8 @@ class StripConfig:
                 # So last stop + current_intermediary is occupied
                 status[last_stop.light_index + current_intermediary] = Light(LightStatus.OCCUPIED)
 
+        return status
+
 
     def distance(self, x1, y1, x2, y2):
         return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
