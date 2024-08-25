@@ -20,9 +20,13 @@ t.ParseStaticFeed()
 
 
 # stops = route.GetOrderedStops()
-
+routes = t.GetCurrentStatus()
 strip = [
-    LightStop(t.GetStop(123))
+    LightStop(t.GetStop(538), 0),
+    LightStop(t.GetStop(558), 2),
+    LightStop(t.GetStop(575), 4),
+    LightStop(t.GetStop(600), 6),
+    LightStop(t.GetStop(605), 9),
 ]
 
 
