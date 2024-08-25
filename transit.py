@@ -4,7 +4,6 @@ from protobuf_to_dict import protobuf_to_dict
 import pandas as pd
 import io
 import zipfile
-from pyrosm import get_data, OSM
 from flatten_json import flatten
 import time
 
