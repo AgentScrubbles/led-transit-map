@@ -131,6 +131,10 @@ class Route:
     def AddStop(self, stop: Stop):
         self.stops[stop.id] = stop
 
+    def SetStops(self, stops: list[Stop]):
+        for stop in stops:
+            self.stops[int(stop.id)] = stop
+
     def GetStops(self):
         return self.stops.copy()
 
