@@ -13,6 +13,10 @@ from protobuf_to_dict import protobuf_to_dict
 from flatten_json import flatten
 import json
 
+from dotenv import main
+
+main.load_dotenv()
+
 static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
 realtime_url = 'https://s3.amazonaws.com/kcm-alerts-realtime-prod/vehiclepositions.pb'
 
@@ -23,7 +27,7 @@ local_path = '/tmp/gtfs'
 # pixels = neopixel.NeoPixel(board.D10, 10)
 light_colors = {
     LightStatus.EMPTY: 0x000000,
-    LightStatus.STATION: 0xF1E5AC,
+    LightStatus.STATION: 0xFFD700,
     LightStatus.OCCUPIED: 0x3DAE2B
 }
 with open('strips.json') as json_data:
