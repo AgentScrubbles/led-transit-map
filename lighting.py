@@ -1,14 +1,12 @@
 import time
 import board
-import neopixel
+import neopixel_spi
 
-pixels = neopixel.NeoPixel(board.D10, 10)
-pixels.fill((0, 255, 0))
-time.sleep(3)
-while(True):
-    for i in range(10):
-        pixels.fill((0, 0, 0))
-        pixels[i] = (255, 0, 0)
-        time.sleep(1)
-    print('sleep')
+
+pixels = neopixel_spi.NeoPixel_SPI(board.SPI(), 10)
+
+pixels.fill(0xff0000)
+for i in range(10):
+    pixels.fill(0x000000)
+    pixels[i] = 0x00ff00
     time.sleep(1)

@@ -1,5 +1,3 @@
-rpi_ws281x
-adafruit-circuitpython-neopixel
 flatten_json
 pandas
 certifi==2024.2.2
