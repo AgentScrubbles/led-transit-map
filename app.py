@@ -22,6 +22,7 @@ realtime_url = 'https://s3.amazonaws.com/kcm-alerts-realtime-prod/vehiclepositio
 
 conn = sqlite3.connect(os.getenv('gtfs_db'))
 stop_radius = 0.002
+loop_sleep = 8
 
 # 2 line #0x00A0DF
 local_path = '/tmp/gtfs'
@@ -36,7 +37,7 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 10, brightness=0.5)
+    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 10, brightness=0.1)
 }
 
 
@@ -231,6 +232,8 @@ while(True):
                 else:
                     # Calculate the distance from the last stop to this one
                     prev_stop_config = get_prev_stop_config_by_current_stop_code(route.short_name, vehicle.direction_id, stop.code)
+                    if (prev_stop_config is None):
+                        continue
                     prev_stop = get_stop_by_code(prev_stop_config.get('code'))
                     prev_bounding_area = BoundingArea.FromPoint(prev_stop.latitude, prev_stop.longitude, stop_radius)
                     percentage = stop_bounding_area.calculate_percentage(prev_bounding_area, (vehicle.latitude, vehicle.longitude))
@@ -238,5 +241,5 @@ while(True):
                     led = find_largest_object(stop_config.get('loading'), percentage)
                     if led is not None:
                         set_single_led(led.get('led'), LightStatus.OCCUPIED)
-    time.sleep(2)
+    time.sleep(loop_sleep)
 
