@@ -35,7 +35,7 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 10)
+    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 10, 3, 0.5)
 }
 
 
