@@ -30,6 +30,35 @@ class BoundingArea:
         x2 = x + from_center_offset
         y2 = y + from_center_offset
         return BoundingArea(x1, y1, x2, y2)
+    
+    def distance(self, x1, y1, x2, y2):
+        return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+    def calculate_percentage(self, area2, point: tuple):
+        # Unpack point coordinates
+        px, py = point
+
+        # Calculate the relevant edges:
+        # For area1, use the farthest edge in the direction of area2
+        # For area2, use the closest edge in the direction from area1
+        
+        # Assuming that the two BoundingAreas are aligned (i.e., area2 is always to the right and downwards of area1):
+        area1_edge_x = self.X2  # Right edge of the first area
+        area1_edge_y = self.Y2  # Bottom edge of the first area
+        area2_edge_x = area2.X1  # Left edge of the second area
+        area2_edge_y = area2.Y1  # Top edge of the second area
+
+        # Calculate total distance between edges
+        total_distance = self.distance(area1_edge_x, area1_edge_y, area2_edge_x, area2_edge_y)
+
+        # Calculate distance from area1 edge to the point
+        distance_to_point = self.distance(area1_edge_x, area1_edge_y, px, py)
+
+        # Calculate the percentage as a ratio of these distances
+        percentage = distance_to_point / total_distance
+
+        # Ensure the percentage is between 0 and 1
+        return max(0, min(1, percentage))
 
 class LightStop:
     def __init__(self, stop: Stop, light_index: int) -> None:
@@ -92,31 +121,4 @@ class StripConfig:
         return status
 
 
-    def distance(self, x1, y1, x2, y2):
-        return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
-    def calculate_percentage(self, area1: BoundingArea, area2: BoundingArea, point: tuple):
-        # Unpack point coordinates
-        px, py = point
-
-        # Calculate the relevant edges:
-        # For area1, use the farthest edge in the direction of area2
-        # For area2, use the closest edge in the direction from area1
-        
-        # Assuming that the two BoundingAreas are aligned (i.e., area2 is always to the right and downwards of area1):
-        area1_edge_x = area1.X2  # Right edge of the first area
-        area1_edge_y = area1.Y2  # Bottom edge of the first area
-        area2_edge_x = area2.X1  # Left edge of the second area
-        area2_edge_y = area2.Y1  # Top edge of the second area
-
-        # Calculate total distance between edges
-        total_distance = self.distance(area1_edge_x, area1_edge_y, area2_edge_x, area2_edge_y)
-
-        # Calculate distance from area1 edge to the point
-        distance_to_point = self.distance(area1_edge_x, area1_edge_y, px, py)
-
-        # Calculate the percentage as a ratio of these distances
-        percentage = distance_to_point / total_distance
-
-        # Ensure the percentage is between 0 and 1
-        return max(0, min(1, percentage))

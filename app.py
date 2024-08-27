@@ -21,6 +21,7 @@ static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
 realtime_url = 'https://s3.amazonaws.com/kcm-alerts-realtime-prod/vehiclepositions.pb'
 
 conn = sqlite3.connect(os.getenv('gtfs_db'))
+stop_radius = 0.002
 
 # 2 line #0x00A0DF
 local_path = '/tmp/gtfs'
@@ -35,7 +36,7 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 10, 3, 0.5)
+    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 10, brightness=0.5)
 }
 
 
@@ -87,6 +88,18 @@ def get_stop_config_by_stop_code(route_short_name, direction, stop_code):
         return None
     return find_stop_by_stop_code(directional_stops.get('stops'), stop_code)
 
+def get_prev_stop_config_by_current_stop_code(route_short_name, direction, stop_code):
+    line_directions = led_config.get(route_short_name)
+    if line_directions is None:
+        return None
+    directional_stops = filter_led_config_direction(line_directions, direction)
+    if (directional_stops is None):
+        return None
+    arr = directional_stops.get('stops')
+    for index, item in enumerate(arr):
+        if item.get('code') == int(stop_code):
+            return None if index == 0 else arr[index - 1]
+
 def get_route_by_id(route_id):
     route_df = pd.read_sql_query("SELECT * FROM routes r where r.route_id = '{}'".format(route_id), conn)
     return Route(route_df.iloc[0])
@@ -105,6 +118,10 @@ def get_stops_by_route_id(route_id):
     for stop_idx, stop in stops_df.iterrows():
         stops.append(Stop(stop))
     return stops
+
+def get_stop_by_code(stop_code):
+    stops_df = pd.read_sql_query("SELECT * FROM stops s WHERE s.stop_code = '{}'".format(stop_code), conn)
+    return Stop(stops_df.iloc[0])
 
 def hydrate_routes():
     hydrated_routes = {}
@@ -161,7 +178,26 @@ def get_latest_feed():
         })
     return vehicles_by_route
 
-
+def find_largest_object(objects, target_percentage):
+    # Initialize the best object and best percentage
+    best_object = None
+    best_percentage = -1
+    closest_object = None
+    
+    for obj in objects:
+        led_percentage = float(obj.get('percentage'))
+        
+        # Track the closest object if no valid one is found
+        if closest_object is None or led_percentage < closest_object.get('percentage'):
+            closest_object = obj
+        
+        if led_percentage <= target_percentage:
+            if led_percentage > best_percentage:
+                best_object = obj
+                best_percentage = led_percentage
+    
+    # If no object was found within the target, return the closest one
+    return best_object if best_object else closest_object
 
 
 while(True):
@@ -184,13 +220,23 @@ while(True):
             vehicle: Vehicle = vehicle_item.get('vehicle')
             route: Route = vehicle_item.get('route')
             stop: Stop = route.stops.get(vehicle.stop_id)
-            stop_bounding_area = BoundingArea.FromPoint(stop.latitude, stop.longitude, 0.05)
+            stop_bounding_area = BoundingArea.FromPoint(stop.latitude, stop.longitude, stop_radius)
             vehicle_is_at_stop = stop_bounding_area.contains(vehicle.latitude, vehicle.longitude)
             stop_config = get_stop_config_by_stop_code(route.short_name, vehicle.direction_id, stop.code)
             label = 'is at' if vehicle_is_at_stop else 'is heading to'
             if stop_config is not None:
                 print('Vehicle {} {} stop {}'.format(vehicle.label, label, stop.name))
-                set_single_led(stop_config.get('led'), LightStatus.OCCUPIED)
-
+                if vehicle_is_at_stop:
+                    set_single_led(stop_config.get('led'), LightStatus.OCCUPIED)
+                else:
+                    # Calculate the distance from the last stop to this one
+                    prev_stop_config = get_prev_stop_config_by_current_stop_code(route.short_name, vehicle.direction_id, stop.code)
+                    prev_stop = get_stop_by_code(prev_stop_config.get('code'))
+                    prev_bounding_area = BoundingArea.FromPoint(prev_stop.latitude, prev_stop.longitude, stop_radius)
+                    percentage = stop_bounding_area.calculate_percentage(prev_bounding_area, (vehicle.latitude, vehicle.longitude))
+                    # We know we're not at the stop, now just figure out which light to light up
+                    led = find_largest_object(stop_config.get('loading'), percentage)
+                    if led is not None:
+                        set_single_led(led.get('led'), LightStatus.OCCUPIED)
     time.sleep(2)
 
