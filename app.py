@@ -3,8 +3,8 @@ from transit import TransitFeed, Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
-# import board
-# import neopixel
+import board
+import neopixel_spi
 import sqlite3
 import pandas as pd
 from google.transit import gtfs_realtime_pb2
@@ -16,21 +16,22 @@ import json
 static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
 realtime_url = 'https://s3.amazonaws.com/kcm-alerts-realtime-prod/vehiclepositions.pb'
 
-conn = sqlite3.connect('/tmp/kcmetro.db')
+conn = sqlite3.connect(os.getenv('gtfs_db'))
 
+# 2 line #0x00A0DF
 local_path = '/tmp/gtfs'
 # pixels = neopixel.NeoPixel(board.D10, 10)
 light_colors = {
-    LightStatus.EMPTY: (0, 0, 0),
-    LightStatus.STATION: (255, 213, 0),
-    LightStatus.OCCUPIED: (95, 173, 40)
+    LightStatus.EMPTY: 0x000000,
+    LightStatus.STATION: 0xF1E5AC,
+    LightStatus.OCCUPIED: 0x3DAE2B
 }
 with open('strips.json') as json_data:
     led_config = json.load(json_data)
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: None # Here is where the pixels will go
+    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 10)
 }
 
 
@@ -50,7 +51,7 @@ def clear_lights():
     for strip_idx in strips:
         strip = strips.get(strip_idx)
         if (strip is not None):
-            strip = color
+            strip.fill(color)
 
 def set_single_led(led_code: str, status: LightStatus):
     color = light_colors.get(status)
