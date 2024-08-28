@@ -4,7 +4,7 @@ from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
 import board
-import neopixel_spi
+# import neopixel_spi
 import sqlite3
 import pandas as pd
 from google.transit import gtfs_realtime_pb2
@@ -18,7 +18,7 @@ from dotenv import main
 main.load_dotenv()
 
 static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
-realtime_url = 'https://s3.amazonaws.com/kcm-alerts-realtime-prod/vehiclepositions.pb'
+realtime_url = os.getenv('realtime_url')
 
 conn = sqlite3.connect(os.getenv('gtfs_db'))
 stop_radius = 0.002
@@ -37,7 +37,7 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 10, brightness=0.1)
+    1: None # neopixel_spi.NeoPixel_SPI(board.SPI(), 10, brightness=0.1)
 }
 
 

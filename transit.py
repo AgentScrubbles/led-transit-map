@@ -18,7 +18,7 @@ def print_stopwatch(sec, msg):
 class Vehicle:
     def __init__(self, row):
         self.id = row.get('id')
-        self.trip_id = int(row.get('vehicle.trip.trip_id'))
+        self.trip_id = row.get('vehicle.trip.trip_id')
         self.start_date = row.get('vehicle.trip.start_date')
         self.route_id = int(row.get('vehicle.trip.route_id'))
         self.direction_id = int(row.get('vehicle.trip.direction_id'))
@@ -133,7 +133,7 @@ class Route:
 
     def SetStops(self, stops: list[Stop]):
         for stop in stops:
-            self.stops[int(stop.id)] = stop
+            self.stops[stop.id] = stop
 
     def GetStops(self):
         return self.stops.copy()
