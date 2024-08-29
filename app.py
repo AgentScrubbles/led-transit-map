@@ -268,7 +268,7 @@ while(True):
                     led = find_largest_object(stop.get('loading'), percentage)
                     if led is not None:
                         set_single_led(led.get('led'), parse_color(route.color))
-                        vehicles_set_this_iteration[stop.get('led')] = True
+                        vehicles_set_this_iteration[led.get('led')] = True
         # clear_lights()
         route_stops = get_all_route_stops(route_short_name)
         
