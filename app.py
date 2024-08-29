@@ -23,7 +23,7 @@ client = OnebusawaySDK(
     api_key=os.getenv("ONEBUSAWAY_API_KEY")
 )
 
-
+COUNT_LED = 100 # todo, need to do this per strip later
 static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
 realtime_url = os.getenv('realtime_url')
 agency = int(os.getenv('AGENCY_ID'))
@@ -68,6 +68,10 @@ def clear_lights():
             pass
         #    strip.fill(color)
 
+def clear_single_led(led_code: str):
+    set_single_led(led_code, 0x000000)
+
+
 def set_single_led(led_code: str, status_or_color):
 
     if isinstance(status_or_color, LightStatus):
@@ -80,9 +84,11 @@ def set_single_led(led_code: str, status_or_color):
     led_index = int(arr[1])
     if (last_set_colors.get(led_code) == color):
         return
+    
     last_set_colors[led_code] = color
     if strip is not None:
         strip[led_index] = color
+    print('\tPixel {} is set to {}'.format(led_index, color))
         
 
 def filter_led_config_direction(arr, direction_id):
@@ -265,9 +271,24 @@ while(True):
                         vehicles_set_this_iteration[stop.get('led')] = True
         # clear_lights()
         route_stops = get_all_route_stops(route_short_name)
-        for route_stop in route_stops:
-            led = route_stop.get('led')
-            if vehicles_set_this_iteration.get(led) is not True:
-                set_single_led(led, LightStatus.STATION)
+        
+        stop_lookup = {}
+        for route_name in led_config:
+            route_direction = led_config.get(route_name)
+            for route in route_direction:
+                stops = route.get('stops')
+                for stop in stops:
+                    stop_lookup[stop.get('led')] = True
+        
+        for strip in strips:
+            for i in range(COUNT_LED):
+                led = '{}:{}'.format(strip, i)
+                if vehicles_set_this_iteration.get(led) is not True:
+                    if stop_lookup.get(led) is None:
+                        clear_single_led(led)
+                    else:
+                        set_single_led(led, LightStatus.STATION)
+
+
     time.sleep(loop_sleep)
 
