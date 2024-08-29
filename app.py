@@ -12,7 +12,7 @@ import requests
 from protobuf_to_dict import protobuf_to_dict
 from flatten_json import flatten
 import json
-import binascii
+import enum
 
 from onebusaway import OnebusawaySDK
 from dotenv import main
@@ -118,6 +118,13 @@ def get_prev_stop_config_by_current_stop_code(route_short_name, direction, stop_
 all_route_trips_by_id = {}
 stops_by_id = {}
 
+def get_trips():     
+    for route_name in led_config:   
+        trips = client.trips_for_route.list(route_name, include_schedule=True, include_status=True).data.references.trips
+        for trip in trips:
+            all_route_trips_by_id[trip.id] = trip
+
+
 def hydrate_routes():
     hydrated_routes = {}
     for route_name in led_config:
@@ -130,9 +137,8 @@ def hydrate_routes():
             stops = direction_conf.get('stops')
             for stop in stops:
                 stops_by_id[stop.get('code')] = stop
-        trips = client.trips_for_route.list(route_name, include_schedule=True, include_status=True).data.references.trips
-        for trip in trips:
-            all_route_trips_by_id[trip.id] = trip
+    get_trips()
+
 
         # stop_ids = client.stops_for_route.list(route_name).data.entry.stop_ids
         # for stop_id in stop_ids:
@@ -233,11 +239,18 @@ while(True):
                 else:
                     # Calculate the distance from the last stop to this one
                     trip_meta = all_route_trips_by_id.get(trip.trip_id)
+                    if (trip_meta is None):
+                        # New trip added
+                        get_trips()
+                        trip_meta = all_route_trips_by_id.get(trip.trip_id)
+                        if trip_meta is None:
+                            print ('WARN - Vehicle {} has no trip metadata')
                     schedule = trip.schedule.stop_times
                     prev_stop = None
                     for idx, possible_prev_stop in enumerate(schedule):
                         if (len(schedule) > idx + 1 and schedule[idx + 1].stop_id == stop.get('code')):
                             prev_stop = possible_prev_stop
+
                     prev_stop_config = get_prev_stop_config_by_current_stop_code(route.id, int(trip_meta.direction_id), stop.get('code'))
                     if (prev_stop_config is None):
                         continue
