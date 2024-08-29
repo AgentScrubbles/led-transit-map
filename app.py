@@ -37,7 +37,7 @@ local_path = '/tmp/gtfs'
 # pixels = neopixel.NeoPixel(board.D10, 10)
 light_colors = {
     LightStatus.EMPTY: 0x000000,
-    LightStatus.STATION: 0xFFD700,
+    LightStatus.STATION: 0xFFFF00,
     LightStatus.OCCUPIED: 0x3DAE2B
 }
 with open('strips.json') as json_data:
