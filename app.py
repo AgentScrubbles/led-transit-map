@@ -12,6 +12,14 @@ import requests
 from protobuf_to_dict import protobuf_to_dict
 from flatten_json import flatten
 import json
+import binascii
+
+from onebusaway import OnebusawaySDK
+
+client = OnebusawaySDK(
+    # This is the default and can be omitted
+    api_key=os.environ.get("ONEBUSAWAY_API_KEY"),
+)
 
 from dotenv import main
 
@@ -19,6 +27,7 @@ main.load_dotenv()
 
 static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
 realtime_url = os.getenv('realtime_url')
+agency = int(os.getenv('AGENCY_ID'))
 
 conn = sqlite3.connect(os.getenv('gtfs_db'))
 stop_radius = 0.002
@@ -59,8 +68,10 @@ def clear_lights():
         if (strip is not None):
             strip.fill(color)
 
-def set_single_led(led_code: str, status: LightStatus):
-    color = light_colors.get(status)
+def set_single_led(led_code: str, status_or_color):
+
+    if (status_or_color is LightStatus):
+        color = light_colors.get(status_or_color)
     arr = led_code.split(':')
     strip_index = int(arr[0])
     strip = strips.get(strip_index)
@@ -98,44 +109,59 @@ def get_prev_stop_config_by_current_stop_code(route_short_name, direction, stop_
         return None
     arr = directional_stops.get('stops')
     for index, item in enumerate(arr):
-        if item.get('code') == int(stop_code):
+        if item.get('code') == stop_code:
             return None if index == 0 else arr[index - 1]
 
-def get_route_by_id(route_id):
-    route_df = pd.read_sql_query("SELECT * FROM routes r where r.route_id = '{}'".format(route_id), conn)
-    return Route(route_df.iloc[0])
 
-def get_route_by_name(name):
-    route_df = pd.read_sql_query("SELECT * FROM routes r where r.route_short_name = '{}'".format(name), conn)
-    return Route(route_df.iloc[0])
-
-def get_trip_by_id(trip_id):
-    trip_df = pd.read_sql_query("SELECT * FROM trips t where t.trip_id = '{}'".format(trip_id), conn)
-    return Trip(trip_df.iloc[0])
-
-def get_stops_by_route_id(route_id):
-    stops_df = pd.read_sql_query("SELECT s.* FROM routes r JOIN route_stops rs ON rs.route_id = r.route_id JOIN stops s ON rs.stop_id = s.stop_id WHERE r.route_id = {}".format(route_id), conn)
-    stops = []
-    for stop_idx, stop in stops_df.iterrows():
-        stops.append(Stop(stop))
-    return stops
-
-def get_stop_by_code(stop_code):
-    stops_df = pd.read_sql_query("SELECT * FROM stops s WHERE s.stop_code = '{}'".format(stop_code), conn)
-    return Stop(stops_df.iloc[0])
+all_route_trips_by_id = {}
+stops_by_id = {}
 
 def hydrate_routes():
     hydrated_routes = {}
     for route_name in led_config:
-        route = get_route_by_name(route_name)
-        route_id = int(route.id)
-        hydrated_routes[route_id] = route
-        stops = get_stops_by_route_id(route_id)
-        route.SetStops(stops)
+        route = client.route.retrieve(route_name).data.entry
+        
+        hydrated_routes[route_name] = route
+        route.stops = {}
+        route_conf = led_config.get(route_name)
+        for direction_conf in route_conf:
+            stops = direction_conf.get('stops')
+            for stop in stops:
+                stops_by_id[stop.get('code')] = stop
+        trips = client.trips_for_route.list(route_name, include_schedule=True, include_status=True).data.references.trips
+        for trip in trips:
+            all_route_trips_by_id[trip.id] = trip
+
+        # stop_ids = client.stops_for_route.list(route_name).data.entry.stop_ids
+        # for stop_id in stop_ids:
+        #     stop_detail = client.stop.retrieve(stop_id).data.entry
+        #     print('{},{},{},{}'.format(stop_detail.id, stop_detail.name, stop_detail.lat, stop_detail.lon))
+        #     route.stops[stop_id] = stop_detail
+        # route.SetStops(stops)
 
     return hydrated_routes
 
 routes_by_id = hydrate_routes()
+trips_by_id = {}
+
+def get_latest_feed():
+    trips_by_id.clear()
+    vehicles_by_route = {}
+    
+    for idx, route_id in enumerate(routes_by_id):
+        routes_by_id[route_id].trips = {}
+        route_trips = client.trips_for_route.list(route_id, include_status=True).data.list
+        vehicles_by_route[route_id] = []
+        for route_trip in route_trips:
+            trips_by_id[route_trip.trip_id] = route_trip
+            routes_by_id[route_id].trips[route_trip.trip_id] = route_trip
+            vehicles_by_route[route_id].append({
+                'vehicle': route_trip.status,
+                'route': routes_by_id[route_id],
+                'trip': route_trip
+            })
+    return vehicles_by_route
+
 
 def get_all_route_stops(route_short_name):
     line_directions = led_config.get(route_short_name)
@@ -148,36 +174,9 @@ def get_all_route_stops(route_short_name):
             all_stops.append(stop)
     return all_stops
 
-def get_latest_feed():
-    feed = gtfs_realtime_pb2.FeedMessage()
-    response = requests.get(realtime_url, allow_redirects=True)
-    feed.ParseFromString(response.content)
-
-    dict = protobuf_to_dict(feed)
-
-    zet_df = pd.DataFrame(flatten(record, '.')
-        for record in dict['entity'])
-
-    vehicles_by_route = {}
-    for index, row in zet_df.iterrows():
-        vehicle = Vehicle(row)
-
-        route: Route = routes_by_id.get(vehicle.route_id)
-        # We don't care about this route
-        if route is None:
-            continue
-        trip = get_trip_by_id(int(vehicle.trip_id))
-        route_vehicles = vehicles_by_route.get(route.short_name)
-        if (route_vehicles is None):
-            vehicles_by_route[route.short_name] = []
-            route_vehicles = vehicles_by_route.get(route.short_name)
-
-        route_vehicles.append({
-            "route": route,
-            "trip": trip,
-            "vehicle": vehicle
-        })
-    return vehicles_by_route
+def parse_color(color_str):
+    color = '0x{}'.format(color_str)
+    return int(color, 0)
 
 def find_largest_object(objects, target_percentage):
     # Initialize the best object and best percentage
@@ -212,34 +211,39 @@ while(True):
         vehicles = vehicles_by_route.get(route_short_name)
 
         clear_lights()
-
         route_stops = get_all_route_stops(route_short_name)
         for route_stop in route_stops:
             set_single_led(route_stop.get('led'), LightStatus.STATION)
 
         for vehicle_item in vehicles:
-            vehicle: Vehicle = vehicle_item.get('vehicle')
+            vehicle = vehicle_item.get('vehicle')
             route: Route = vehicle_item.get('route')
-            stop: Stop = route.stops.get(vehicle.stop_id)
-            stop_bounding_area = BoundingArea.FromPoint(stop.latitude, stop.longitude, stop_radius)
-            vehicle_is_at_stop = stop_bounding_area.contains(vehicle.latitude, vehicle.longitude)
-            stop_config = get_stop_config_by_stop_code(route.short_name, vehicle.direction_id, stop.code)
+            trip = vehicle_item.get('trip')
+            next_stop_id = vehicle.next_stop
+            stop = stops_by_id.get(next_stop_id)
+            stop_bounding_area = BoundingArea.FromPoint(stop.get('lat'), stop.get('lon'), stop_radius)
+            vehicle_is_at_stop = stop_bounding_area.contains(vehicle.position.lat, vehicle.position.lon)
             label = 'is at' if vehicle_is_at_stop else 'is heading to'
-            if stop_config is not None:
-                print('Vehicle {} {} stop {}'.format(vehicle.label, label, stop.name))
+            if stop is not None:
+                print('Vehicle {} {} stop {}'.format(vehicle.vehicle_id, label, stop.get('name')))
                 if vehicle_is_at_stop:
-                    set_single_led(stop_config.get('led'), LightStatus.OCCUPIED)
+                    set_single_led(stop.get('led'), parse_color(route.color))
                 else:
                     # Calculate the distance from the last stop to this one
-                    prev_stop_config = get_prev_stop_config_by_current_stop_code(route.short_name, vehicle.direction_id, stop.code)
+                    trip_meta = all_route_trips_by_id.get(trip.trip_id)
+                    schedule = trip.schedule.stop_times
+                    prev_stop = None
+                    for idx, possible_prev_stop in enumerate(schedule):
+                        if (len(schedule) > idx + 1 and schedule[idx + 1].stop_id == stop.get('code')):
+                            prev_stop = possible_prev_stop
+                    prev_stop_config = get_prev_stop_config_by_current_stop_code(route.id, int(trip_meta.direction_id), stop.get('code'))
                     if (prev_stop_config is None):
                         continue
-                    prev_stop = get_stop_by_code(prev_stop_config.get('code'))
-                    prev_bounding_area = BoundingArea.FromPoint(prev_stop.latitude, prev_stop.longitude, stop_radius)
-                    percentage = stop_bounding_area.calculate_percentage(prev_bounding_area, (vehicle.latitude, vehicle.longitude))
+                    prev_bounding_area = BoundingArea.FromPoint(prev_stop_config.get('lat'), prev_stop_config.get('lon'), stop_radius)
+                    percentage = stop_bounding_area.calculate_percentage(prev_bounding_area, (vehicle.position.lat, vehicle.position.lon))
                     # We know we're not at the stop, now just figure out which light to light up
-                    led = find_largest_object(stop_config.get('loading'), percentage)
+                    led = find_largest_object(stop.get('loading'), percentage)
                     if led is not None:
-                        set_single_led(led.get('led'), LightStatus.OCCUPIED)
+                        set_single_led(led.get('led'), parse_color(route.color))
     time.sleep(loop_sleep)
 

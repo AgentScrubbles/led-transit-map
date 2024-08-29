@@ -1,54 +1,555 @@
 {
-    "1 Line": [{
+    "40_100479": [{
+        "direction": 1,
+        "stops": [
+            {
+                "code": "40_99913",
+                "name": "Angle Lake",
+                "lat": 47.422154,
+                "lon": -122.297958,
+                "led": "1:0",
+                "loading": []
+            },
+            {
+                "code": "40_99903",
+                "name": "SeaTac/Airport",
+                "lat": 47.445053,
+                "lon": -122.296692,
+                "led": "1:4",
+                "loading": [{
+                    "led": "1:1",
+                    "percentage": 0.33
+                },{
+                    "led": "1:2",
+                    "percentage": 0.67
+                },{
+                    "led": "1:3",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_99905",
+                "name": "Tukwila Int'l Blvd",
+                "lat": 47.463924,
+                "lon": -122.288002,
+                "led": "1:9",
+                "loading": [{
+                    "led": "1:5",
+                    "percentage": 0.25
+                },{
+                    "led": "1:6",
+                    "percentage": 0.5
+                },{
+                    "led": "1:7",
+                    "percentage": 0.75
+                },{
+                    "led": "1:8",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_55578",
+                "name": "Rainier Beach",
+                "lat": 47.522953,
+                "lon": -122.279083,
+                "led": "1:19",
+                "loading": [{
+                    "led": "1:10",
+                    "percentage": 0.111
+                },{
+                    "led": "1:11",
+                    "percentage": 0.222
+                },{
+                    "led": "1:12",
+                    "percentage": 0.333
+                },{
+                    "led": "1:13",
+                    "percentage": 0.444
+                },{
+                    "led": "1:14",
+                    "percentage": 0.555
+                },{
+                    "led": "1:15",
+                    "percentage": 0.666
+                },{
+                    "led": "1:16",
+                    "percentage": 0.777
+                },{
+                    "led": "1:17",
+                    "percentage": 0.888
+                },{
+                    "led": "1:18",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_55656",
+                "name": "Othello",
+                "lat": 47.538502,
+                "lon": -122.281693,
+                "led": "1:23",
+                "loading": [{
+                    "led": "1:20",
+                    "percentage": 0.33
+                },{
+                    "led": "1:21",
+                    "percentage": 0.67
+                },{
+                    "led": "1:22",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_55778",
+                "name": "Columbia City",
+                "lat": 47.56028,
+                "lon": -122.292892,
+                "led": "1:28",
+                "loading": [{
+                    "led": "1:24",
+                    "percentage": 0.25
+                },{
+                    "led": "1:25",
+                    "percentage": 0.50
+                },{
+                    "led": "1:26",
+                    "percentage": 0.75
+                },{
+                    "led": "1:27",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_55860",
+                "name": "Mount Baker",
+                "lat": 47.576992,
+                "lon": -122.297867,
+                "led": "1:32",
+                "loading": [{
+                    "led": "1:29",
+                    "percentage": 0.33
+                },{
+                    "led": "1:30",
+                    "percentage": 0.67
+                },{
+                    "led": "1:31",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_99240",
+                "name": "Beacon Hill",
+                "lat": 47.579678,
+                "lon": -122.311401,
+                "led": "1:36",
+                "loading": [{
+                    "led": "1:33",
+                    "percentage": 0.33
+                },{
+                    "led": "1:34",
+                    "percentage": 0.67
+                },{
+                    "led": "1:35",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_99256",
+                "name": "SODO",
+                "lat": 47.580589,
+                "lon": -122.327263,
+                "led": "1:40",
+                "loading": [{
+                    "led": "1:37",
+                    "percentage": 0.33
+                },{
+                    "led": "1:38",
+                    "percentage": 0.67
+                },{
+                    "led": "1:39",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_99260",
+                "name": "Stadium",
+                "lat": 47.592285,
+                "lon": -122.326988,
+                "led": "1:43",
+                "loading": [{
+                    "led": "1:41",
+                    "percentage": 0.5
+                },{
+                    "led": "1:42",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_621",
+                "name": "Int'l Dist/Chinatown",
+                "lat": 47.598438,
+                "lon": -122.32782,
+                "led": "1:46",
+                "loading": [{
+                    "led": "1:44",
+                    "percentage": 0.25
+                },{
+                    "led": "1:45",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_532",
+                "name": "Pioneer Square",
+                "lat": 47.603199,
+                "lon": -122.331581,
+                "led": "1:49",
+                "loading": [{
+                    "led": "1:47",
+                    "percentage": 0.5
+                },{
+                    "led": "1:48",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_565",
+                "name": "Symphony",
+                "lat": 47.608246,
+                "lon": -122.336166,
+                "led": "1:51",
+                "loading": [{
+                    "led": "1:50",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_1121",
+                "name": "Westlake",
+                "lat": 47.611759,
+                "lon": -122.335785,
+                "led": "1:54",
+                "loading": [{
+                    "led": "1:52",
+                    "percentage": 0.5
+                },{
+                    "led": "1:53",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_99603",
+                "name": "Capitol Hill",
+                "lat": 47.619621,
+                "lon": -122.320038,
+                "led": "1:58",
+                "loading": [{
+                    "led": "1:55",
+                    "percentage": 0.33
+                },{
+                    "led": "1:56",
+                    "percentage": 0.67
+                },{
+                    "led": "1:57",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_99605",
+                "name": "Univ of Washington",
+                "lat": 47.650312,
+                "lon": -122.303736,
+                "led": "1:63",
+                "loading": [{
+                    "led": "1:59",
+                    "percentage": 0.25
+                },{
+                    "led": "1:60",
+                    "percentage": 0.5
+                },{
+                    "led": "1:61",
+                    "percentage": 0.75
+                },{
+                    "led": "1:62",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_990002",
+                "name": "U District",
+                "lat": 47.660749,
+                "lon": -122.314067,
+                "led": "1:67",
+                "loading": [{
+                    "led": "1:64",
+                    "percentage": 0.33
+                },{
+                    "led": "1:65",
+                    "percentage": 0.67
+                },{
+                    "led": "1:66",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_990004",
+                "name": "Roosevelt",
+                "lat": 47.677081,
+                "lon": -122.315928,
+                "led": "1:70",
+                "loading": [{
+                    "led": "1:68",
+                    "percentage": 0.5
+                },{
+                    "led": "1:69",
+                    "percentage": 1
+                }]
+            },
+            {
+                "code": "40_990006",
+                "name": "Northgate",
+                "lat": 47.703414,
+                "lon": -122.328244,
+                "led": "1:75",
+                "loading": [{
+                    "led": "1:71",
+                    "percentage": 0.25
+                },{
+                    "led": "1:72",
+                    "percentage": 0.5
+                },{
+                    "led": "1:73",
+                    "percentage": 0.75
+                },{
+                    "led": "1:74",
+                    "percentage": 1
+                }]
+            }
+        ]
+    }, {
         "direction": 0,
         "stops": [
             {
-                "code": "40-623",
-                "led": "1:0"
+                "code": "40_990005",
+                "name": "Northgate",
+                "lat": 47.702662,
+                "lon": -122.32832,
+                "led": "1:1",
+                "loading": []
             },
             {
-                "code": "40-501",
-                "led": "1:2",
-                "loading": [
-                    {
-                        "led": "1:1",
-                        "percentage": 1
-                    }
-                ]
+                "code": "40_990003",
+                "name": "Roosevelt",
+                "lat": 47.676107,
+                "lon": -122.316041,
+                "led": "1:1",
+                "loading": []
             },
             {
-                "code": "40-455",
-                "led": "1:4",
-                "loading": [
-                    {
-                        "led": "1:3",
-                        "percentage": 1
-                    }
-                ]
+                "code": "40_990001",
+                "name": "U District",
+                "lat": 47.659875,
+                "lon": -122.314194,
+                "led": "1:1",
+                "loading": []
             },
             {
-                "code": "40-1108",
-                "led": "1:6",
-                "loading": [
-                    {
-                        "led": "1:5",
-                        "percentage": 1
-                    }
-                ]
+                "code": "40_99604",
+                "name": "Univ of Washington",
+                "lat": 47.649349,
+                "lon": -122.303795,
+                "led": "1:1",
+                "loading": []
             },
             {
-                "code": "99610",
-                "led": "1:9",
-                "loading": [
-                    {
-                        "led": "1:7",
-                        "percentage": 0.5
-                    },
-                    {
-                        "led": "1:8",
-                        "percentage": 1
-                    }
-                ]
+                "code": "40_99610",
+                "name": "Capitol Hill",
+                "lat": 47.61956,
+                "lon": -122.320389,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_1108",
+                "name": "Westlake",
+                "lat": 47.61145,
+                "lon": -122.337532,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_455",
+                "name": "Symphony",
+                "lat": 47.607246,
+                "lon": -122.335754,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_501",
+                "name": "Pioneer Square",
+                "lat": 47.602139,
+                "lon": -122.331055,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_623",
+                "name": "Int'l Dist/Chinatown",
+                "lat": 47.59766,
+                "lon": -122.328217,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_99101",
+                "name": "Stadium",
+                "lat": 47.591824,
+                "lon": -122.327354,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_99111",
+                "name": "SODO",
+                "lat": 47.579952,
+                "lon": -122.327522,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_99121",
+                "name": "Beacon Hill",
+                "lat": 47.579124,
+                "lon": -122.311279,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_55949",
+                "name": "Mount Baker",
+                "lat": 47.576439,
+                "lon": -122.297737,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_56039",
+                "name": "Columbia City",
+                "lat": 47.559025,
+                "lon": -122.292389,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_56159",
+                "name": "Othello",
+                "lat": 47.537529,
+                "lon": -122.281471,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_56173",
+                "name": "Rainier Beach",
+                "lat": 47.522266,
+                "lon": -122.279587,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_99900",
+                "name": "Tukwila Int'l Blvd",
+                "lat": 47.464272,
+                "lon": -122.288399,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_99904",
+                "name": "SeaTac/Airport",
+                "lat": 47.444969,
+                "lon": -122.297028,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_99914",
+                "name": "Angle Lake",
+                "lat": 47.423122,
+                "lon": -122.297615,
+                "led": "1:1",
+                "loading": []
+            },
+
+
+
+
+
+
+            {
+                "code": "40_N15-T1",
+                "name": "Shoreline South/148th",
+                "lat": 47.736499,
+                "lon": -122.325446,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_N15-T2",
+                "name": "Shoreline South/148th",
+                "lat": 47.735753,
+                "lon": -122.32504,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_N17-T1",
+                "name": "Shoreline North/185th",
+                "lat": 47.764477,
+                "lon": -122.322731,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_N17-T2",
+                "name": "Shoreline North/185th",
+                "lat": 47.763699,
+                "lon": -122.323048,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_N19-T1",
+                "name": "Mountlake Terrace",
+                "lat": 47.785448,
+                "lon": -122.314761,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_N19-T2",
+                "name": "Mountlake Terrace",
+                "lat": 47.784548,
+                "lon": -122.314801,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_N23-T1",
+                "name": "Lynnwood City Center",
+                "lat": 47.815876,
+                "lon": -122.294275,
+                "led": "1:1",
+                "loading": []
+            },
+            {
+                "code": "40_N23-T2",
+                "name": "Lynnwood City Center",
+                "lat": 47.815403,
+                "lon": -122.295185,
+                "led": "1:1",
+                "loading": []
             }
         ]
     }]
