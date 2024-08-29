@@ -12,7 +12,7 @@ import requests
 from protobuf_to_dict import protobuf_to_dict
 from flatten_json import flatten
 import json
-import enum
+import asyncio
 
 from onebusaway import OnebusawaySDK
 from dotenv import main
@@ -72,6 +72,42 @@ def clear_single_led(led_code: str):
     set_single_led(led_code, 0x000000)
 
 
+async def fade_led(strip, led_index, start_color, end_color, fade_duration=500, step_duration=50):
+    # Ensure durations are valid
+    fade_duration = max(fade_duration, step_duration)
+    
+    # Number of steps
+    steps = fade_duration // step_duration
+    
+    # Extract RGB components of start and end colors
+    start_r = (start_color >> 16) & 0xFF
+    start_g = (start_color >> 8) & 0xFF
+    start_b = start_color & 0xFF
+    
+    end_r = (end_color >> 16) & 0xFF
+    end_g = (end_color >> 8) & 0xFF
+    end_b = end_color & 0xFF
+    
+    # Compute RGB differences
+    r_step = (end_r - start_r) / steps
+    g_step = (end_g - start_g) / steps
+    b_step = (end_b - start_b) / steps
+    
+    for step in range(steps + 1):
+        # Calculate the current color
+        r = int(start_r + r_step * step)
+        g = int(start_g + g_step * step)
+        b = int(start_b + b_step * step)
+        
+        # Combine into a single hex value
+        current_color = (r << 16) | (g << 8) | b
+        
+        # Set the LED color
+        strip[led_index] = current_color
+        
+        # Wait for the next step
+        await asyncio.sleep(step_duration / 1000.0)  # Convert ms to seconds
+
 def set_single_led(led_code: str, status_or_color):
 
     if isinstance(status_or_color, LightStatus):
@@ -85,9 +121,12 @@ def set_single_led(led_code: str, status_or_color):
     if (last_set_colors.get(led_code) == color):
         return
     
+    last_color = last_set_colors.get(led_code)
+    if (last_color is None):
+        last_color = 0x000000
     last_set_colors[led_code] = color
     if strip is not None:
-        strip[led_index] = color
+        asyncio.run(fade_led(strip, led_index, last_color, color))
     print('\tPixel {} is set to {}'.format(led_index, color))
         
 
