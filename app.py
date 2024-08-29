@@ -4,7 +4,7 @@ from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
 import board
-# import neopixel_spi
+import neopixel_spi
 import sqlite3
 import pandas as pd
 from google.transit import gtfs_realtime_pb2
@@ -15,15 +15,14 @@ import json
 import binascii
 
 from onebusaway import OnebusawaySDK
-
-client = OnebusawaySDK(
-    # This is the default and can be omitted
-    api_key=os.environ.get("ONEBUSAWAY_API_KEY"),
-)
-
 from dotenv import main
 
 main.load_dotenv()
+
+client = OnebusawaySDK(
+    api_key=os.getenv("ONEBUSAWAY_API_KEY")
+)
+
 
 static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
 realtime_url = os.getenv('realtime_url')
@@ -46,7 +45,7 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: None # neopixel_spi.NeoPixel_SPI(board.SPI(), 10, brightness=0.1)
+    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 100, brightness=0.1)
 }
 
 
@@ -66,12 +65,15 @@ def clear_lights():
     for strip_idx in strips:
         strip = strips.get(strip_idx)
         if (strip is not None):
-            strip.fill(color)
+            pass
+        #    strip.fill(color)
 
 def set_single_led(led_code: str, status_or_color):
 
-    if (status_or_color is LightStatus):
+    if isinstance(status_or_color, LightStatus):
         color = light_colors.get(status_or_color)
+    else:
+        color = status_or_color
     arr = led_code.split(':')
     strip_index = int(arr[0])
     strip = strips.get(strip_index)
