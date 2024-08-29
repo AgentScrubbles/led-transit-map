@@ -103,7 +103,8 @@ async def fade_led(strip, led_index, start_color, end_color, fade_duration=500, 
         current_color = (r << 16) | (g << 8) | b
         
         # Set the LED color
-        strip[led_index] = current_color
+        if strip is not None:
+            strip[led_index] = current_color
         
         # Wait for the next step
         await asyncio.sleep(step_duration)  # Convert ms to seconds
@@ -126,7 +127,8 @@ def set_single_led(led_code: str, status_or_color):
         last_color = 0x000000
     last_set_colors[led_code] = color
     if strip is not None:
-        asyncio.run(fade_led(strip, led_index, last_color, color, step_duration=50))
+        strip[led_index] = color
+    # asyncio.run(fade_led(strip, led_index, last_color, color, step_duration=50))
     print('\tPixel {} is set to {}'.format(led_index, color))
         
 
