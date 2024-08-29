@@ -4,7 +4,7 @@ from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
 import board
-import neopixel_spi
+# import neopixel_spi
 import sqlite3
 import pandas as pd
 from google.transit import gtfs_realtime_pb2
@@ -27,9 +27,9 @@ client = OnebusawaySDK(
 static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
 realtime_url = os.getenv('realtime_url')
 agency = int(os.getenv('AGENCY_ID'))
-
+last_set_colors = {}
 conn = sqlite3.connect(os.getenv('gtfs_db'))
-stop_radius = 0.002
+stop_radius = 0.01
 loop_sleep = 8
 
 # 2 line #0x00A0DF
@@ -45,7 +45,7 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: neopixel_spi.NeoPixel_SPI(board.SPI(), 100, brightness=0.1)
+    1: None #neopixel_spi.NeoPixel_SPI(board.SPI(), 100, brightness=0.1)
 }
 
 
@@ -78,8 +78,12 @@ def set_single_led(led_code: str, status_or_color):
     strip_index = int(arr[0])
     strip = strips.get(strip_index)
     led_index = int(arr[1])
+    if (last_set_colors.get(led_code) == color):
+        return
+    last_set_colors[led_code] = color
     if strip is not None:
         strip[led_index] = color
+        
 
 def filter_led_config_direction(arr, direction_id):
     for item in arr:
@@ -218,10 +222,7 @@ while(True):
         route_config = led_config.get(route_short_name)
         vehicles = vehicles_by_route.get(route_short_name)
 
-        clear_lights()
-        route_stops = get_all_route_stops(route_short_name)
-        for route_stop in route_stops:
-            set_single_led(route_stop.get('led'), LightStatus.STATION)
+        vehicles_set_this_iteration = {}
 
         for vehicle_item in vehicles:
             vehicle = vehicle_item.get('vehicle')
@@ -231,11 +232,11 @@ while(True):
             stop = stops_by_id.get(next_stop_id)
             stop_bounding_area = BoundingArea.FromPoint(stop.get('lat'), stop.get('lon'), stop_radius)
             vehicle_is_at_stop = stop_bounding_area.contains(vehicle.position.lat, vehicle.position.lon)
-            label = 'is at' if vehicle_is_at_stop else 'is heading to'
             if stop is not None:
-                print('Vehicle {} {} stop {}'.format(vehicle.vehicle_id, label, stop.get('name')))
                 if vehicle_is_at_stop:
+                    print('Vehicle {} is at stop {}'.format(vehicle.vehicle_id, stop.get('name')))
                     set_single_led(stop.get('led'), parse_color(route.color))
+                    vehicles_set_this_iteration[stop.get('led')] = True
                 else:
                     # Calculate the distance from the last stop to this one
                     trip_meta = all_route_trips_by_id.get(trip.trip_id)
@@ -256,9 +257,17 @@ while(True):
                         continue
                     prev_bounding_area = BoundingArea.FromPoint(prev_stop_config.get('lat'), prev_stop_config.get('lon'), stop_radius)
                     percentage = stop_bounding_area.calculate_percentage(prev_bounding_area, (vehicle.position.lat, vehicle.position.lon))
+                    print('Vehicle {} is heading to stop {} ({}%)'.format(vehicle.vehicle_id, stop.get('name'), round(percentage * 100)))
                     # We know we're not at the stop, now just figure out which light to light up
                     led = find_largest_object(stop.get('loading'), percentage)
                     if led is not None:
                         set_single_led(led.get('led'), parse_color(route.color))
+                        vehicles_set_this_iteration[stop.get('led')] = True
+        # clear_lights()
+        route_stops = get_all_route_stops(route_short_name)
+        for route_stop in route_stops:
+            led = route_stop.get('led')
+            if vehicles_set_this_iteration.get(led) is not True:
+                set_single_led(led, LightStatus.STATION)
     time.sleep(loop_sleep)
 
