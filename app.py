@@ -1,16 +1,11 @@
 
-from transit import TransitFeed, Route, Vehicle, Stop, Trip
+from transit import Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
 import board
-# import neopixel_spi
+import neopixel
 import sqlite3
-import pandas as pd
-from google.transit import gtfs_realtime_pb2
-import requests
-from protobuf_to_dict import protobuf_to_dict
-from flatten_json import flatten
 import json
 import asyncio
 
@@ -45,7 +40,7 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: None #neopixel_spi.NeoPixel_SPI(board.SPI(), 100, brightness=0.1)
+    1: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1) #None #neopixel_spi.NeoPixel_SPI(board.SPI(), 100, brightness=0.1)
 }
 
 
@@ -189,14 +184,6 @@ def hydrate_routes():
             for stop in stops:
                 stops_by_id[stop.get('code')] = stop
     get_trips()
-
-
-        # stop_ids = client.stops_for_route.list(route_name).data.entry.stop_ids
-        # for stop_id in stop_ids:
-        #     stop_detail = client.stop.retrieve(stop_id).data.entry
-        #     print('{},{},{},{}'.format(stop_detail.id, stop_detail.name, stop_detail.lat, stop_detail.lon))
-        #     route.stops[stop_id] = stop_detail
-        # route.SetStops(stops)
 
     return hydrated_routes
 
