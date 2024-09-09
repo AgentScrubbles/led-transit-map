@@ -10,9 +10,9 @@ import json
 import asyncio
 
 from onebusaway import OnebusawaySDK
-from dotenv import load_dotenv
+from dotenv import main
 
-load_dotenv()
+main.load_dotenv()
 
 client = OnebusawaySDK(
     api_key=os.getenv("ONEBUSAWAY_API_KEY")
