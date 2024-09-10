@@ -33,20 +33,18 @@ def display_colors(hex_color, gamma_values):
     # Clear the strip
     strip.fill(neopixel.Color(0, 0, 0))
     strip.show()
-    
-    for i, gamma in enumerate(gamma_values):
-        # Apply gamma correction
-        r_corr = gamma_correct(r, gamma)
-        g_corr = gamma_correct(g, gamma)
-        b_corr = gamma_correct(b, gamma)
+
+    counter = 0
+    current_gamma = 0
+    max_gamma = 3.6
+    step = max_gamma / LED_COUNT
+    while current_gamma < max_gamma:
+        r_corr = gamma_correct(r, current_gamma)
+        g_corr = gamma_correct(g, current_gamma)
+        b_corr = gamma_correct(b, current_gamma)
+        strip[counter] = (r_corr, g_corr, b_corr)
+        current_gamma = current_gamma + step
         
-        # Determine the position of this color display
-        start_index = (i * LED_COUNT) // len(gamma_values)
-        end_index = ((i + 1) * LED_COUNT) // len(gamma_values)
-        
-        # Set the segment of the strip to the corrected color
-        for j in range(start_index, end_index):
-            strip[j] = (r_corr, g_corr, b_corr)
         
     strip.show()
 
