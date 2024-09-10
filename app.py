@@ -3,8 +3,8 @@ from transit import Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
-# import board
-# import neopixel
+import board
+import neopixel
 import sqlite3
 import json
 import asyncio
@@ -27,7 +27,7 @@ agency = int(os.getenv('AGENCY_ID'))
 last_set_colors = {}
 conn = sqlite3.connect(os.getenv('gtfs_db'))
 stop_radius = 0.01
-loop_sleep = 8
+loop_sleep = 4
 
 # 2 line #0x00A0DF
 local_path = '/tmp/gtfs'
@@ -42,9 +42,11 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    # 1: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1) #None #neopixel_spi.NeoPixel_SPI(board.SPI(), 100, brightness=0.1)
-    2: None
+    1: neopixel.NeoPixel(board.D18, COUNT_LED, brightness=0.1),
+    2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1)
 }
+
+neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1).fill(0xc003e0)
 
 
 def printStops(stopArr):
@@ -126,7 +128,7 @@ def set_single_led(led_code: str, status_or_color):
     last_set_colors[led_code] = color
     if strip is not None:
         strip[led_index] = color
-    # asyncio.run(fade_led(strip, led_index, last_color, color, step_duration=50))
+        # asyncio.run(fade_led(strip, led_index, last_color, color, step_duration=50))
     print('\tPixel {} is set to {}'.format(led_index, color))
         
 
