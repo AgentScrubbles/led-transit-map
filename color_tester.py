@@ -29,9 +29,7 @@ def hex_to_rgb(hex_color):
     b = hex_color & 0xFF
     return (r, g, b)
 
-def display_colors(hex_color, gamma_values):
-    """Display various gamma-corrected versions of the color on the LED strip."""
-    r, g, b = hex_to_rgb(hex_color)
+def display_colors(r, g, b):
     
     # Clear the strip
     strip.fill((0, 0, 0))
@@ -62,13 +60,15 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # Read the hex color input
-    hex_color = int(sys.argv[1], 16)
+    r = int(sys.argv[1], 16)
+    g = int(sys.argv[2], 16)
+    b = int(sys.argv[3], 16)
     
     # Define gamma values to experiment with
     gamma_values = [2.2, 2.4, 2.6, 2.8]
     
     # Display the color variations
-    display_colors(hex_color, gamma_values)
+    display_colors(r, g, b, gamma_values)
     
-    print(f"Displaying variations of color {hex(hex_color)} with gamma values {gamma_values}")
+    print(f"Displaying variations of color ({r} {g} {b}) with gamma values {gamma_values}")
     
