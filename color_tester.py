@@ -12,7 +12,7 @@ LED_INVERT = False     # True to invert the signal (if using common cathode LED 
 LED_CHANNEL = 0        # GPIO channel
 
 # Initialize the NeoPixel strip
-strip = neopixel.NeoPixel(board.D10, 160, brightness=0.2, pixel_order=neopixel.GRB)
+strip = neopixel.NeoPixel(board.D10, 160, LED_FREQ_HZ=800000 brightness=0.2, pixel_order=neopixel.GRB)
 
 def gamma_correct(value, gamma=2.5):
     """Apply gamma correction to a single color value."""
