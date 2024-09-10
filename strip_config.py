@@ -5,7 +5,8 @@ from enum import Enum
 class LightStatus(Enum):
     EMPTY = 0,
     STATION = 1,
-    OCCUPIED = 2
+    OCCUPIED = 2,
+    DISABLED_STATION = 3
 
 class BoundingArea:
     def __init__(self, x1: float, y1: float, x2: float, y2: float):

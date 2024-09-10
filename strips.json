@@ -1079,6 +1079,7 @@
             {
                 "code": "",
                 "name": "130th",
+                "disabled": true,
                 "led": "2:134",
                 "intermediaries": {
                     "type": "FeatureCollection",
@@ -4217,6 +4218,7 @@
             {
                 "code": "",
                 "name": "Kent/Des Moines",
+                "disabled": true,
                 "led": "2:14",
                 "intermediaries": {
                     "type": "FeatureCollection",
@@ -4372,6 +4374,7 @@
             {
                 "code": "",
                 "name": "Star Lake",
+                "disabled": true,
                 "led": "2:8",
                 "intermediaries": {
                     "type": "FeatureCollection",
@@ -4585,6 +4588,7 @@
             {
                 "code": "",
                 "name": "Federal Way",
+                "disabled": true,
                 "led": "2:0"
             },
 

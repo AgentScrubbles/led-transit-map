@@ -34,7 +34,8 @@ local_path = '/tmp/gtfs'
 light_colors = {
     LightStatus.EMPTY: 0x000000,
     LightStatus.STATION: 0x7F1200,
-    LightStatus.OCCUPIED: 0x3DAE2B
+    LightStatus.OCCUPIED: 0x3DAE2B,
+    LightStatus.DISABLED_STATION: 0xFF0000
 }
 with open('strips.json') as json_data:
     led_config = json.load(json_data)
@@ -347,12 +348,15 @@ while(True):
         route_stops = get_all_route_stops(route_short_name)
         
         stop_lookup = {}
+        disabled = {}
         for route_name in led_config:
             route_direction = led_config.get(route_name)
             for route in route_direction:
                 stops = route.get('stops')
                 for stop in stops:
                     stop_lookup[stop.get('led')] = True
+                    if stop.get('disabled'):
+                        disabled[stop.get('led')] = True
         
         for strip in strips:
             for i in range(COUNT_LED):
@@ -360,6 +364,8 @@ while(True):
                 if vehicles_set_this_iteration.get(led) is not True:
                     if stop_lookup.get(led) is None:
                         clear_single_led(led)
+                    elif disabled.get(led) is not None:
+                        set_single_led(led, LightStatus.DISABLED_STATION)
                     else:
                         set_single_led(led, LightStatus.STATION)
 
