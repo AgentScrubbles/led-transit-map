@@ -31,7 +31,7 @@ def display_colors(hex_color, gamma_values):
     r, g, b = hex_to_rgb(hex_color)
     
     # Clear the strip
-    strip.fill(neopixel.Color(0, 0, 0))
+    strip.fill((0, 0, 0))
     strip.show()
 
     counter = 0
