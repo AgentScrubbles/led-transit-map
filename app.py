@@ -3,11 +3,13 @@ from transit import Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
-import board
-import neopixel
+# import board
+# import neopixel
 import sqlite3
 import json
 import asyncio
+from shapely.geometry import Polygon, Point, LinearRing
+from numpy import * 
 
 from onebusaway import OnebusawaySDK
 from dotenv import main
@@ -18,7 +20,7 @@ client = OnebusawaySDK(
     api_key=os.getenv("ONEBUSAWAY_API_KEY")
 )
 
-COUNT_LED = 100 # todo, need to do this per strip later
+COUNT_LED = 160 # todo, need to do this per strip later
 static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
 realtime_url = os.getenv('realtime_url')
 agency = int(os.getenv('AGENCY_ID'))
@@ -40,7 +42,8 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1) #None #neopixel_spi.NeoPixel_SPI(board.SPI(), 100, brightness=0.1)
+    # 1: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1) #None #neopixel_spi.NeoPixel_SPI(board.SPI(), 100, brightness=0.1)
+    2: None
 }
 
 
@@ -163,12 +166,14 @@ def get_prev_stop_config_by_current_stop_code(route_short_name, direction, stop_
 
 all_route_trips_by_id = {}
 stops_by_id = {}
+config_stops = {}
 
 def get_trips():     
     for route_name in led_config:   
         trips = client.trips_for_route.list(route_name, include_schedule=True, include_status=True).data.references.trips
         for trip in trips:
             all_route_trips_by_id[trip.id] = trip
+
 
 
 def hydrate_routes():
@@ -178,11 +183,11 @@ def hydrate_routes():
         
         hydrated_routes[route_name] = route
         route.stops = {}
-        route_conf = led_config.get(route_name)
-        for direction_conf in route_conf:
-            stops = direction_conf.get('stops')
-            for stop in stops:
-                stops_by_id[stop.get('code')] = stop
+        # route_conf = led_config.get(route_name)
+        # for direction_conf in route_conf:
+        #     stops = direction_conf.get('stops')
+        #     for stop in stops:
+        #         stops_by_id[stop.get('code')] = stop
     get_trips()
 
     return hydrated_routes
@@ -196,11 +201,17 @@ def get_latest_feed():
     
     for idx, route_id in enumerate(routes_by_id):
         routes_by_id[route_id].trips = {}
-        route_trips = client.trips_for_route.list(route_id, include_status=True).data.list
+        route_trips_result = client.trips_for_route.list(route_id, include_status=True, include_schedule=True)
+        route_trips = route_trips_result.data.list
+        trip_lookup = {}
+        for trip in route_trips_result.data.references.trips:
+            trip_lookup[trip.id] = trip
         vehicles_by_route[route_id] = []
         for route_trip in route_trips:
             trips_by_id[route_trip.trip_id] = route_trip
             routes_by_id[route_id].trips[route_trip.trip_id] = route_trip
+            trip = trip_lookup[route_trip.trip_id]
+            route_trip.direction = int(trip.direction_id)
             vehicles_by_route[route_id].append({
                 'vehicle': route_trip.status,
                 'route': routes_by_id[route_id],
@@ -224,27 +235,30 @@ def parse_color(color_str):
     color = '0x{}'.format(color_str)
     return int(color, 0)
 
-def find_largest_object(objects, target_percentage):
-    # Initialize the best object and best percentage
-    best_object = None
-    best_percentage = -1
-    closest_object = None
-    
-    for obj in objects:
-        led_percentage = float(obj.get('percentage'))
+def get_route_stop_config(route_name, direction, stop_code):
+    route_config = led_config.get(route_short_name)
+    for direction_config in route_config:
+        if direction == direction_config.get('direction'):
+            for stop in direction_config.get('stops'):
+                if stop.get('code') == stop_code:
+                    return stop
+                
+def get_led_for_intermediary(stop, vehicle):
+    intermediaries = stop.get('intermediaries')
+    if intermediaries is None:
+        return None
+    for intermediate in intermediaries.get('features'):
+        geometry_json = intermediate.get('geometry')
+        coords = geometry_json.get('coordinates').copy()
+        # coords.append(coords[0])
         
-        # Track the closest object if no valid one is found
-        if closest_object is None or led_percentage < closest_object.get('percentage'):
-            closest_object = obj
-        
-        if led_percentage <= target_percentage:
-            if led_percentage > best_percentage:
-                best_object = obj
-                best_percentage = led_percentage
-    
-    # If no object was found within the target, return the closest one
-    return best_object if best_object else closest_object
 
+        polygon = Polygon(LinearRing(coords))
+        point = Point(vehicle.position.lon, vehicle.position.lat)
+        is_inside = polygon.contains(point)
+        if is_inside:
+            return intermediate.get('led')
+        
 
 while(True):
 
@@ -253,7 +267,6 @@ while(True):
     # pixels.fill((0, 0, 0))
 
     for route_short_name in led_config:
-        route_config = led_config.get(route_short_name)
         vehicles = vehicles_by_route.get(route_short_name)
 
         vehicles_set_this_iteration = {}
@@ -263,7 +276,12 @@ while(True):
             route: Route = vehicle_item.get('route')
             trip = vehicle_item.get('trip')
             next_stop_id = vehicle.next_stop
-            stop = stops_by_id.get(next_stop_id)
+
+            stop = get_route_stop_config(route_short_name, trip.direction, next_stop_id)
+            if stop is None:
+                print('WARN Stop {} was not found in config, direction {}'.format(next_stop_id, trip.direction))
+                continue
+
             stop_bounding_area = BoundingArea.FromPoint(stop.get('lat'), stop.get('lon'), stop_radius)
             vehicle_is_at_stop = stop_bounding_area.contains(vehicle.position.lat, vehicle.position.lon)
             if stop is not None:
@@ -272,6 +290,11 @@ while(True):
                     set_single_led(stop.get('led'), parse_color(route.color))
                     vehicles_set_this_iteration[stop.get('led')] = True
                 else:
+
+                    if trip.direction == 1:
+                        print ('Ignoring direction 1')
+                        continue
+
                     # Calculate the distance from the last stop to this one
                     trip_meta = all_route_trips_by_id.get(trip.trip_id)
                     if (trip_meta is None):
@@ -281,22 +304,25 @@ while(True):
                         if trip_meta is None:
                             print ('WARN - Vehicle {} has no trip metadata')
                     schedule = trip.schedule.stop_times
+
+                    
+
                     prev_stop = None
                     for idx, possible_prev_stop in enumerate(schedule):
                         if (len(schedule) > idx + 1 and schedule[idx + 1].stop_id == stop.get('code')):
                             prev_stop = possible_prev_stop
+                    
 
                     prev_stop_config = get_prev_stop_config_by_current_stop_code(route.id, int(trip_meta.direction_id), stop.get('code'))
                     if (prev_stop_config is None):
                         continue
-                    prev_bounding_area = BoundingArea.FromPoint(prev_stop_config.get('lat'), prev_stop_config.get('lon'), stop_radius)
-                    percentage = stop_bounding_area.calculate_percentage(prev_bounding_area, (vehicle.position.lat, vehicle.position.lon))
-                    print('Vehicle {} is heading to stop {} ({}%)'.format(vehicle.vehicle_id, stop.get('name'), round(percentage * 100)))
+
+                    led = get_led_for_intermediary(prev_stop_config, vehicle)
+                    print('Vehicle {} is heading to stop {} ({}, {})'.format(vehicle.vehicle_id, stop.get('name'), vehicle.position.lat, vehicle.position.lon))
                     # We know we're not at the stop, now just figure out which light to light up
-                    led = find_largest_object(stop.get('loading'), percentage)
                     if led is not None:
-                        set_single_led(led.get('led'), parse_color(route.color))
-                        vehicles_set_this_iteration[led.get('led')] = True
+                        set_single_led(led, parse_color(route.color))
+                        vehicles_set_this_iteration[led] = True
         # clear_lights()
         route_stops = get_all_route_stops(route_short_name)
         
