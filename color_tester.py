@@ -16,6 +16,8 @@ strip = neopixel.NeoPixel(board.D10, 160, brightness=0.2, pixel_order=neopixel.G
 
 def gamma_correct(value, gamma=2.5):
     """Apply gamma correction to a single color value."""
+    if gamma is 0:
+        return 0
     corrected_value = int((value / 255.0) ** (1.0 / gamma) * 255)
     return min(max(corrected_value, 0), 255)
 
