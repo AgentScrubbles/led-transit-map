@@ -45,6 +45,7 @@ def display_colors(hex_color, gamma_values):
         g_corr = gamma_correct(g, current_gamma)
         b_corr = gamma_correct(b, current_gamma)
         strip[counter] = (r_corr, g_corr, b_corr)
+        print ('Gamma: {}'.format(current_gamma))
         current_gamma = current_gamma + step
         
         
