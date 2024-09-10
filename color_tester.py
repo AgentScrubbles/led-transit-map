@@ -5,21 +5,22 @@ import time
 # Define constants for the strip
 LED_COUNT = 100        # Number of LED pixels
 LED_PIN = board.D18    # GPIO pin connected to the pixels
-LED_FREQ_HZ = 800000   # LED signal frequency in hertz (usually 800kHz)
+LED_FREQ_HZ = 400000   # LED signal frequency in hertz (usually 800kHz)
 LED_DMA = 10           # DMA channel to use for generating signal
 LED_BRIGHTNESS = 255   # Set to 0 for darkest and 255 for brightest
 LED_INVERT = False     # True to invert the signal (if using common cathode LED strip)
 LED_CHANNEL = 0        # GPIO channel
 
 # Initialize the NeoPixel strip
-strip = neopixel.NeoPixel(board.D10, 160, LED_FREQ_HZ=800000 brightness=0.2, pixel_order=neopixel.GRB)
+strip = neopixel.NeoPixel(board.D10, 160, brightness=0.2, pixel_order=neopixel.GRB)
 
 def gamma_correct(value, gamma=2.5):
     """Apply gamma correction to a single color value."""
     if gamma is 0:
         return 0
-    corrected_value = int((value / 255.0) ** (1.0 / gamma) * 255)
-    return min(max(corrected_value, 0), 255)
+    corrected_value = (value / 255.0) ** (1.0 / gamma) * 255
+    print("Corrected: {}".format(corrected_value))
+    return min(max(int(corrected_value), 0), 255)
 
 def hex_to_rgb(hex_color):
     """Convert hex color (int format) to RGB tuple."""
@@ -45,7 +46,7 @@ def display_colors(hex_color, gamma_values):
         g_corr = gamma_correct(g, current_gamma)
         b_corr = gamma_correct(b, current_gamma)
         strip[counter] = (r_corr, g_corr, b_corr)
-        print ('Gamma: {}'.format(current_gamma))
+        print ('Gamma: {} ({}, {}, {})'.format(current_gamma, r_corr, g_corr, b_corr))
         current_gamma = current_gamma + step
         counter = counter + 1
         
