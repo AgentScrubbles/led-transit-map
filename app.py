@@ -43,7 +43,7 @@ os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
     1: neopixel.NeoPixel(board.D18, COUNT_LED, brightness=0.1),
-    2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1)
+    2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1, pixel_order=neopixel.GRB)
 }
 
 neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1).fill(0xc003e0)
@@ -65,8 +65,7 @@ def clear_lights():
     for strip_idx in strips:
         strip = strips.get(strip_idx)
         if (strip is not None):
-            pass
-        #    strip.fill(color)
+            strip.fill(color)
 
 def clear_single_led(led_code: str):
     set_single_led(led_code, 0x000000)
@@ -196,6 +195,7 @@ def hydrate_routes():
 
 routes_by_id = hydrate_routes()
 trips_by_id = {}
+clear_lights()
 
 def get_latest_feed():
     trips_by_id.clear()
