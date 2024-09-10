@@ -136,7 +136,8 @@ def set_single_led(led_code: str, status_or_color):
         last_color = 0x000000
     last_set_colors[led_code] = color
     if strip is not None:
-        strip[led_index] = color
+        strip.setPixelColorRGB(0, *strip.gamma32(neopixel.Color(color)))
+        # strip[led_index] = color
         # asyncio.run(fade_led(strip, led_index, last_color, color, step_duration=50))
     print('\tPixel {} is set to {}'.format(led_index, color))
         
