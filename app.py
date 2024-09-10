@@ -3,13 +3,12 @@ from transit import Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
-# import board
-# import neopixel
+import board
+import neopixel
 import sqlite3
 import json
 import asyncio
 from shapely.geometry import Polygon, Point, LinearRing
-from numpy import * 
 
 from onebusaway import OnebusawaySDK
 from dotenv import main
@@ -34,7 +33,7 @@ local_path = '/tmp/gtfs'
 # pixels = neopixel.NeoPixel(board.D10, 10)
 light_colors = {
     LightStatus.EMPTY: 0x000000,
-    LightStatus.STATION: 0xFFFF00,
+    LightStatus.STATION: 0x7F1200,
     LightStatus.OCCUPIED: 0x3DAE2B
 }
 with open('strips.json') as json_data:
@@ -42,8 +41,8 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: None, # neopixel.NeoPixel(board.D18, COUNT_LED, brightness=0.1),
-    2: None #neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.2, pixel_order=neopixel.GRB)
+    1: neopixel.NeoPixel(board.D18, COUNT_LED, brightness=0.1),
+    2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.2, pixel_order=neopixel.GRB)
 }
 
 

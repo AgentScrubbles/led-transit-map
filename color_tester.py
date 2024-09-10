@@ -12,11 +12,11 @@ LED_INVERT = False     # True to invert the signal (if using common cathode LED 
 LED_CHANNEL = 0        # GPIO channel
 
 # Initialize the NeoPixel strip
-strip = neopixel.NeoPixel(board.D10, 160, brightness=0.2, pixel_order=neopixel.GRB)
+strip = neopixel.NeoPixel(board.D10, 160, brightness=0.8, pixel_order=neopixel.GRB)
 
 def gamma_correct(value, gamma=2.5):
     """Apply gamma correction to a single color value."""
-    if gamma is 0:
+    if gamma == 0:
         return 0
     corrected_value = (value / 255.0) ** (1.0 / gamma) * 255
     print("Corrected: {}".format(corrected_value))
@@ -29,7 +29,7 @@ def hex_to_rgb(hex_color):
     b = hex_color & 0xFF
     return (r, g, b)
 
-def display_colors(r, g, b):
+def display_colors(r, g, b, gamma_correction):
     
     # Clear the strip
     strip.fill((0, 0, 0))
@@ -54,10 +54,6 @@ def display_colors(r, g, b):
 # Main script execution
 if __name__ == "__main__":
     import sys
-    
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <hex_color>")
-        sys.exit(1)
     
     # Read the hex color input
     r = int(sys.argv[1], 16)
