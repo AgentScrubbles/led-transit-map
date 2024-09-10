@@ -46,8 +46,6 @@ strips= {
     2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.2, pixel_order=neopixel.GRB)
 }
 
-neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.1).fill(0xc003e0)
-
 
 def printStops(stopArr):
     str = '['
@@ -145,8 +143,7 @@ def set_single_led(led_code: str, status_or_color):
         last_color = 0x000000
     last_set_colors[led_code] = color
     if strip is not None:
-        adjusted_color = strip.gamma32(neopixel.Color(color))
-        strip[led_index] = adjusted_color
+        strip[led_index] = color
         # strip.setPixelColor(0, *strip.gamma32(neopixel.Color(color)))
         # strip[led_index] = color
         # asyncio.run(fade_led(strip, led_index, last_color, color, step_duration=50))
