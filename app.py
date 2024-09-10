@@ -108,12 +108,21 @@ async def fade_led(strip, led_index, start_color, end_color, fade_duration=500, 
         # Wait for the next step
         await asyncio.sleep(step_duration)  # Convert ms to seconds
 
+def gamma_correction(value):
+    gamma = 2.5  # Example gamma value; adjust as needed
+    corrected_value = int((value / 255.0) ** (1.0 / gamma) * 255)
+    return min(max(corrected_value, 0), 255)
+
 def hex_to_rgb(hex_color):
     # Extract the red, green, and blue components from the hex color
     r = (hex_color >> 16) & 0xFF  # Extract the first 8 bits (red)
     g = (hex_color >> 8) & 0xFF   # Extract the next 8 bits (green)
     b = hex_color & 0xFF          # Extract the last 8 bits (blue)
     
+    r = gamma_correction(r)
+    g = gamma_correction(g)
+    b = gamma_correction(b)
+
     return (r, g, b)
 
 
