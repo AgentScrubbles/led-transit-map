@@ -109,11 +109,12 @@ async def fade_led(strip, led_index, start_color, end_color, fade_duration=500, 
         await asyncio.sleep(step_duration)  # Convert ms to seconds
 
 def hex_to_rgb(hex_color):
-    hex_color = hex_color.lstrip('#')  # Remove the '#' if present
-    if len(hex_color) == 6:  # Ensure it's a valid hex color
-        return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-    else:
-        raise ValueError("Invalid hex color format. Use 6 characters (e.g., '#FFFFFF').")
+    # Extract the red, green, and blue components from the hex color
+    r = (hex_color >> 16) & 0xFF  # Extract the first 8 bits (red)
+    g = (hex_color >> 8) & 0xFF   # Extract the next 8 bits (green)
+    b = hex_color & 0xFF          # Extract the last 8 bits (blue)
+    
+    return (r, g, b)
 
 
 def set_single_led(led_code: str, status_or_color):
