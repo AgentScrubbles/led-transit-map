@@ -5,7 +5,6 @@ import os
 import time
 import board
 import neopixel
-import sqlite3
 import json
 import pprint
 from shapely.geometry import Polygon, Point, LinearRing
@@ -309,7 +308,7 @@ while(True):
                     led = get_led_for_intermediary(prev_stop_config, vehicle)
                     print('Vehicle {} is heading to stop {} ({}, {})'.format(vehicle.vehicle_id, stop.get('name'), vehicle.position.lat, vehicle.position.lon))
                     # We know we're not at the stop, now just figure out which light to light up
-                    if led is not None:
+                    if led is not None and led != "":
                         set_single_led(led, parse_color(route.color))
                         vehicles_set_this_iteration[led] = True
         # clear_lights()
