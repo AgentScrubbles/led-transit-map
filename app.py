@@ -7,7 +7,7 @@ import time
 # import neopixel
 import sqlite3
 import json
-import asyncio
+import pprint
 from shapely.geometry import Polygon, Point, LinearRing
 
 from onebusaway import OnebusawaySDK
@@ -99,6 +99,9 @@ def set_single_led(led_code: str, status_or_color):
         color = status_or_color
     color = hex_to_rgb(color)
     arr = led_code.split(':')
+    if len(arr) != 2:
+        return
+
     strip_index = int(arr[0])
     strip_config = strips.get(strip_index)
     strip = strip_config.get('neopixel')
@@ -205,6 +208,7 @@ def get_latest_feed():
                 'route': routes_by_id[route_id],
                 'trip': route_trip
             })
+
     return vehicles_by_route
 
 
