@@ -3,8 +3,8 @@ from transit import Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
-import board
-import neopixel
+# import board
+# import neopixel
 import sqlite3
 import json
 import asyncio
@@ -19,7 +19,7 @@ client = OnebusawaySDK(
     api_key=os.getenv("ONEBUSAWAY_API_KEY")
 )
 
-COUNT_LED = 160 # todo, need to do this per strip later
+COUNT_LED = 320 # todo, need to do this per strip later
 static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
 realtime_url = os.getenv('realtime_url')
 agency = int(os.getenv('AGENCY_ID'))
@@ -42,8 +42,8 @@ with open('strips.json') as json_data:
 os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
 strips= {
-    1: neopixel.NeoPixel(board.D18, COUNT_LED, brightness=0.1),
-    2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.2, pixel_order=neopixel.GRB)
+    1: None #neopixel.NeoPixel(board.D18, COUNT_LED, brightness=0.1),
+    # 2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.2, pixel_order=neopixel.GRB)
 }
 
 
@@ -311,10 +311,6 @@ while(True):
                     set_single_led(stop.get('led'), parse_color(route.color))
                     vehicles_set_this_iteration[stop.get('led')] = True
                 else:
-
-                    if trip.direction == 1:
-                        print ('Ignoring direction 1')
-                        continue
 
                     # Calculate the distance from the last stop to this one
                     trip_meta = all_route_trips_by_id.get(trip.trip_id)
