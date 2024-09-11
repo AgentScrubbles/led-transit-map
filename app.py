@@ -13,98 +13,66 @@ from shapely.geometry import Polygon, Point, LinearRing
 from onebusaway import OnebusawaySDK
 from dotenv import main
 
-main.load_dotenv()
+from colorama import init as colorama_init
+from colorama import Fore
+from colorama import Style
 
+
+# PACKAGE SETUP
+main.load_dotenv()
 client = OnebusawaySDK(
     api_key=os.getenv("ONEBUSAWAY_API_KEY")
 )
+colorama_init()
 
-COUNT_LED = 320 # todo, need to do this per strip later
-static_url = 'https://metro.kingcounty.gov/GTFS/google_transit.zip'
+
+# CONSTANT VARIABLES
+
 realtime_url = os.getenv('realtime_url')
 agency = int(os.getenv('AGENCY_ID'))
 last_set_colors = {}
-conn = sqlite3.connect(os.getenv('gtfs_db'))
 stop_radius = 0.01
 loop_sleep = 4
 
-# 2 line #0x00A0DF
-local_path = '/tmp/gtfs'
-# pixels = neopixel.NeoPixel(board.D10, 10)
 light_colors = {
     LightStatus.EMPTY: 0x000000,
     LightStatus.STATION: 0x7F1200,
     LightStatus.OCCUPIED: 0x3DAE2B,
     LightStatus.DISABLED_STATION: 0xFF0000
 }
+
+
+# ON START LIGHTSTRIP CONFIG
+
 with open('strips.json') as json_data:
     led_config = json.load(json_data)
-os.makedirs(os.path.dirname(local_path), exist_ok=True)
 
-strips= {
-    1: None #neopixel.NeoPixel(board.D18, COUNT_LED, brightness=0.1),
+strips = {
+    1: {
+        'neopixel': None, #neopixel.NeoPixel(board.D18, COUNT_LED, brightness=0.1),
+        'length': 320
+    }
     # 2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.2, pixel_order=neopixel.GRB)
 }
 
+# HELPER METHODS
 
-def printStops(stopArr):
-    str = '['
-    occupiedArr = []
-    for stopOccupiedBool in stopArr:
-        if stopOccupiedBool:
-            occupiedArr.append('X')
-        else:
-            occupiedArr.append(' ')
-    str = '[ ' + '|'.join(occupiedArr) + ' ]'
-    print(str)
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+
+
+# LIGHTSTRIP METHODS
 
 def clear_lights():
     color = light_colors.get(LightStatus.EMPTY)
     for strip_idx in strips:
-        strip = strips.get(strip_idx)
+        strip_config = strips.get(strip_idx)
+        strip = strip_config.get('neopixel')
         if (strip is not None):
             strip.fill(color)
 
 def clear_single_led(led_code: str):
     set_single_led(led_code, 0x000000)
-
-
-async def fade_led(strip, led_index, start_color, end_color, fade_duration=500, step_duration=50):
-    # Ensure durations are valid
-    fade_duration = max(fade_duration, step_duration)
-    
-    # Number of steps
-    steps = fade_duration // step_duration
-    
-    # Extract RGB components of start and end colors
-    start_r = (start_color >> 16) & 0xFF
-    start_g = (start_color >> 8) & 0xFF
-    start_b = start_color & 0xFF
-    
-    end_r = (end_color >> 16) & 0xFF
-    end_g = (end_color >> 8) & 0xFF
-    end_b = end_color & 0xFF
-    
-    # Compute RGB differences
-    r_step = (end_r - start_r) / steps
-    g_step = (end_g - start_g) / steps
-    b_step = (end_b - start_b) / steps
-    
-    for step in range(steps + 1):
-        # Calculate the current color
-        r = int(start_r + r_step * step)
-        g = int(start_g + g_step * step)
-        b = int(start_b + b_step * step)
-        
-        # Combine into a single hex value
-        current_color = (r << 16) | (g << 8) | b
-        
-        # Set the LED color
-        if strip is not None:
-            strip[led_index] = current_color
-        
-        # Wait for the next step
-        await asyncio.sleep(step_duration)  # Convert ms to seconds
 
 def gamma_correction(value):
     gamma = 2.5  # Example gamma value; adjust as needed
@@ -123,7 +91,6 @@ def hex_to_rgb(hex_color):
 
     return (r, g, b)
 
-
 def set_single_led(led_code: str, status_or_color):
 
     if isinstance(status_or_color, LightStatus):
@@ -133,7 +100,8 @@ def set_single_led(led_code: str, status_or_color):
     color = hex_to_rgb(color)
     arr = led_code.split(':')
     strip_index = int(arr[0])
-    strip = strips.get(strip_index)
+    strip_config = strips.get(strip_index)
+    strip = strip_config.get('neopixel')
     led_index = int(arr[1])
     if (last_set_colors.get(led_code) == color):
         return
@@ -146,7 +114,6 @@ def set_single_led(led_code: str, status_or_color):
         strip[led_index] = color
         # strip.setPixelColor(0, *strip.gamma32(neopixel.Color(color)))
         # strip[led_index] = color
-        # asyncio.run(fade_led(strip, led_index, last_color, color, step_duration=50))
     print('\tPixel {} is set to {}'.format(led_index, color))
         
 
@@ -354,9 +321,12 @@ while(True):
                     if stop.get('disabled'):
                         disabled[stop.get('led')] = True
         
-        for strip in strips:
-            for i in range(COUNT_LED):
-                led = '{}:{}'.format(strip, i)
+        for strip_config_idx in strips:
+            strip_config = strips[strip_config_idx]
+            strip = strip_config.get('neopixel')
+            led_count = strip_config.get('length')
+            for i in range(led_count):
+                led = '{}:{}'.format(strip_config_idx, i)
                 if vehicles_set_this_iteration.get(led) is not True:
                     if stop_lookup.get(led) is None:
                         clear_single_led(led)
