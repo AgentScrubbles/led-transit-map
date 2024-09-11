@@ -257,11 +257,9 @@ while(True):
     vehicles_by_route = get_latest_feed()
 
     # pixels.fill((0, 0, 0))
-
+    vehicles_set_this_iteration = {}
     for route_short_name in led_config:
         vehicles = vehicles_by_route.get(route_short_name)
-
-        vehicles_set_this_iteration = {}
 
         for vehicle_item in vehicles:
             vehicle = vehicle_item.get('vehicle')
