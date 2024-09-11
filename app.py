@@ -312,32 +312,32 @@ while(True):
                         set_single_led(led, parse_color(route.color))
                         vehicles_set_this_iteration[led] = True
         # clear_lights()
-        route_stops = get_all_route_stops(route_short_name)
-        
-        stop_lookup = {}
-        disabled = {}
-        for route_name in led_config:
-            route_direction = led_config.get(route_name)
-            for route in route_direction:
-                stops = route.get('stops')
-                for stop in stops:
-                    stop_lookup[stop.get('led')] = True
-                    if stop.get('disabled'):
-                        disabled[stop.get('led')] = True
-        
-        for strip_config_idx in strips:
-            strip_config = strips[strip_config_idx]
-            strip = strip_config.get('neopixel')
-            led_count = strip_config.get('length')
-            for i in range(led_count):
-                led = '{}:{}'.format(strip_config_idx, i)
-                if vehicles_set_this_iteration.get(led) is not True:
-                    if stop_lookup.get(led) is None:
-                        clear_single_led(led)
-                    elif disabled.get(led) is not None:
-                        set_single_led(led, LightStatus.DISABLED_STATION)
-                    else:
-                        set_single_led(led, LightStatus.STATION)
+    route_stops = get_all_route_stops(route_short_name)
+    
+    stop_lookup = {}
+    disabled = {}
+    for route_name in led_config:
+        route_direction = led_config.get(route_name)
+        for route in route_direction:
+            stops = route.get('stops')
+            for stop in stops:
+                stop_lookup[stop.get('led')] = True
+                if stop.get('disabled'):
+                    disabled[stop.get('led')] = True
+    
+    for strip_config_idx in strips.keys():
+        strip_config = strips[strip_config_idx]
+        strip = strip_config.get('neopixel')
+        led_count = strip_config.get('length')
+        for i in range(led_count):
+            led = '{}:{}'.format(strip_config_idx, i)
+            if vehicles_set_this_iteration.get(led) is not True:
+                if stop_lookup.get(led) is None:
+                    clear_single_led(led)
+                elif disabled.get(led) is not None:
+                    set_single_led(led, LightStatus.DISABLED_STATION)
+                else:
+                    set_single_led(led, LightStatus.STATION)
 
 
     time.sleep(loop_sleep)
