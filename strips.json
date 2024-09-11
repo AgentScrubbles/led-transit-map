@@ -3,11 +3,29 @@
         "direction": 1,
         "stops": [
             {
+              "code": "",
+              "name": "Federal Way",
+              "led": "1:319",
+              "disabled": true
+            },
+            {
+              "code": "",
+              "name": "Star Lake",
+              "led": "1:311",
+              "disabled": true
+            },
+            {
+              "code": "",
+              "name": "Kent/Des Moines",
+              "led": "1:305",
+              "disabled": true
+            },
+            {
                 "code": "40_99913",
                 "name": "Angle Lake",
                 "lat": 47.422154,
                 "lon": -122.297958,
-                "led": "1:0",
+                "led": "1:298",
                 "loading": []
             },
             {
@@ -15,384 +33,133 @@
                 "name": "SeaTac/Airport",
                 "lat": 47.445053,
                 "lon": -122.296692,
-                "led": "1:4",
-                "loading": [{
-                    "led": "1:1",
-                    "percentage": 0.33,
-                    "coordinates": [
-                        [
-                            -122.3021594781741,
-                            47.42137650062389
-                        ],
-                        [
-                            -122.29443102939335,
-                            47.42142820715111
-                        ],
-                        [
-                            -122.2940523917114,
-                            47.42825773896163
-                        ],
-                        [
-                            -122.30209279047106,
-                            47.4284648268748
-                        ],
-                        [
-                            -122.30208303027749,
-                            47.42142820715111
-                        ]
-                    ]
-                },{
-                    "led": "1:2",
-                    "percentage": 0.67,
-                    "coordinates": [
-                        [
-                            -122.29404696354771,
-                            47.42826228498646
-                        ],
-                        [
-                            -122.30209279717175,
-                            47.42846965724121
-                        ],
-                        [
-                            -122.30064574744631,
-                            47.43657001425544
-                        ],
-                        [
-                            -122.29343110076724,
-                            47.4364660048457
-                        ],
-                        [
-                            -122.29400864534881,
-                            47.428288205619566
-                        ]
-                    ]
-                },{
-                    "led": "1:3",
-                    "percentage": 1,
-                    "coordinates": [
-                        [
-                            -122.2934750302865,
-                            47.436503229835125
-                        ],
-                        [
-                            -122.29340083115409,
-                            47.44523079055148
-                        ],
-                        [
-                            -122.30007321181553,
-                            47.44523079055148
-                        ],
-                        [
-                            -122.30063571306842,
-                            47.43660056850297
-                        ]
-                    ]
-                }]
+                "led": "1:291"
             },
             {
                 "code": "40_99905",
                 "name": "Tukwila Int'l Blvd",
                 "lat": 47.463924,
                 "lon": -122.288002,
-                "led": "1:9",
-                "loading": [{
-                    "led": "1:5",
-                    "percentage": 0.25
-                },{
-                    "led": "1:6",
-                    "percentage": 0.5
-                },{
-                    "led": "1:7",
-                    "percentage": 0.75
-                },{
-                    "led": "1:8",
-                    "percentage": 1
-                }]
+                "led": "1:285"
             },
             {
                 "code": "40_55578",
                 "name": "Rainier Beach",
                 "lat": 47.522953,
                 "lon": -122.279083,
-                "led": "1:19",
-                "loading": [{
-                    "led": "1:10",
-                    "percentage": 0.111
-                },{
-                    "led": "1:11",
-                    "percentage": 0.222
-                },{
-                    "led": "1:12",
-                    "percentage": 0.333
-                },{
-                    "led": "1:13",
-                    "percentage": 0.444
-                },{
-                    "led": "1:14",
-                    "percentage": 0.555
-                },{
-                    "led": "1:15",
-                    "percentage": 0.666
-                },{
-                    "led": "1:16",
-                    "percentage": 0.777
-                },{
-                    "led": "1:17",
-                    "percentage": 0.888
-                },{
-                    "led": "1:18",
-                    "percentage": 1
-                }]
+                "led": "1:273"
             },
             {
                 "code": "40_55656",
                 "name": "Othello",
                 "lat": 47.538502,
                 "lon": -122.281693,
-                "led": "1:23",
-                "loading": [{
-                    "led": "1:20",
-                    "percentage": 0.33
-                },{
-                    "led": "1:21",
-                    "percentage": 0.67
-                },{
-                    "led": "1:22",
-                    "percentage": 1
-                }]
+                "led": "1:267"
             },
             {
                 "code": "40_55778",
                 "name": "Columbia City",
                 "lat": 47.56028,
                 "lon": -122.292892,
-                "led": "1:28",
-                "loading": [{
-                    "led": "1:24",
-                    "percentage": 0.25
-                },{
-                    "led": "1:25",
-                    "percentage": 0.50
-                },{
-                    "led": "1:26",
-                    "percentage": 0.75
-                },{
-                    "led": "1:27",
-                    "percentage": 1
-                }]
+                "led": "1:260"
             },
             {
                 "code": "40_55860",
                 "name": "Mount Baker",
                 "lat": 47.576992,
                 "lon": -122.297867,
-                "led": "1:32",
-                "loading": [{
-                    "led": "1:29",
-                    "percentage": 0.33
-                },{
-                    "led": "1:30",
-                    "percentage": 0.67
-                },{
-                    "led": "1:31",
-                    "percentage": 1
-                }]
+                "led": "1:254"
             },
             {
                 "code": "40_99240",
                 "name": "Beacon Hill",
                 "lat": 47.579678,
                 "lon": -122.311401,
-                "led": "1:36",
-                "loading": [{
-                    "led": "1:33",
-                    "percentage": 0.33
-                },{
-                    "led": "1:34",
-                    "percentage": 0.67
-                },{
-                    "led": "1:35",
-                    "percentage": 1
-                }]
+                "led": "1:248"
             },
             {
                 "code": "40_99256",
                 "name": "SODO",
                 "lat": 47.580589,
                 "lon": -122.327263,
-                "led": "1:40",
-                "loading": [{
-                    "led": "1:37",
-                    "percentage": 0.33
-                },{
-                    "led": "1:38",
-                    "percentage": 0.67
-                },{
-                    "led": "1:39",
-                    "percentage": 1
-                }]
+                "led": "1:242"
             },
             {
                 "code": "40_99260",
                 "name": "Stadium",
                 "lat": 47.592285,
                 "lon": -122.326988,
-                "led": "1:43",
-                "loading": [{
-                    "led": "1:41",
-                    "percentage": 0.5
-                },{
-                    "led": "1:42",
-                    "percentage": 1
-                }]
+                "led": "1:238"
             },
             {
                 "code": "40_621",
                 "name": "Int'l Dist/Chinatown",
                 "lat": 47.598438,
                 "lon": -122.32782,
-                "led": "1:46",
-                "loading": [{
-                    "led": "1:44",
-                    "percentage": 0.25
-                },{
-                    "led": "1:45",
-                    "percentage": 1
-                }]
+                "led": "1:223"
             },
             {
                 "code": "40_532",
                 "name": "Pioneer Square",
                 "lat": 47.603199,
                 "lon": -122.331581,
-                "led": "1:49",
-                "loading": [{
-                    "led": "1:47",
-                    "percentage": 0.5
-                },{
-                    "led": "1:48",
-                    "percentage": 1
-                }]
+                "led": "1:229"
             },
             {
                 "code": "40_565",
                 "name": "Symphony",
                 "lat": 47.608246,
                 "lon": -122.336166,
-                "led": "1:51",
-                "loading": [{
-                    "led": "1:50",
-                    "percentage": 1
-                }]
+                "led": "1:225"
             },
             {
                 "code": "40_1121",
                 "name": "Westlake",
                 "lat": 47.611759,
                 "lon": -122.335785,
-                "led": "1:54",
-                "loading": [{
-                    "led": "1:52",
-                    "percentage": 0.5
-                },{
-                    "led": "1:53",
-                    "percentage": 1
-                }]
+                "led": "1:221"
             },
             {
                 "code": "40_99603",
                 "name": "Capitol Hill",
                 "lat": 47.619621,
                 "lon": -122.320038,
-                "led": "1:58",
-                "loading": [{
-                    "led": "1:55",
-                    "percentage": 0.33
-                },{
-                    "led": "1:56",
-                    "percentage": 0.67
-                },{
-                    "led": "1:57",
-                    "percentage": 1
-                }]
+                "led": "1:215"
             },
             {
                 "code": "40_99605",
                 "name": "Univ of Washington",
                 "lat": 47.650312,
                 "lon": -122.303736,
-                "led": "1:63",
-                "loading": [{
-                    "led": "1:59",
-                    "percentage": 0.25
-                },{
-                    "led": "1:60",
-                    "percentage": 0.5
-                },{
-                    "led": "1:61",
-                    "percentage": 0.75
-                },{
-                    "led": "1:62",
-                    "percentage": 1
-                }]
+                "led": "1:208"
             },
             {
                 "code": "40_990002",
                 "name": "U District",
                 "lat": 47.660749,
                 "lon": -122.314067,
-                "led": "1:67",
-                "loading": [{
-                    "led": "1:64",
-                    "percentage": 0.33
-                },{
-                    "led": "1:65",
-                    "percentage": 0.67
-                },{
-                    "led": "1:66",
-                    "percentage": 1
-                }]
+                "led": "1:202"
             },
             {
                 "code": "40_990004",
                 "name": "Roosevelt",
                 "lat": 47.677081,
                 "lon": -122.315928,
-                "led": "1:70",
-                "loading": [{
-                    "led": "1:68",
-                    "percentage": 0.5
-                },{
-                    "led": "1:69",
-                    "percentage": 1
-                }]
+                "led": "1:197"
             },
             {
                 "code": "40_990006",
                 "name": "Northgate",
                 "lat": 47.703414,
                 "lon": -122.328244,
-                "led": "1:75",
-                "loading": [{
-                    "led": "1:71",
-                    "percentage": 0.25
-                },{
-                    "led": "1:72",
-                    "percentage": 0.5
-                },{
-                    "led": "1:73",
-                    "percentage": 0.75
-                },{
-                    "led": "1:74",
-                    "percentage": 1
-                }]
+                "led": "1:190"
             },
             {
                 "code": "40_N15-T1",
                 "name": "Shoreline South/148th",
                 "lat": 47.736499,
                 "lon": -122.325446,
-                "led": "1:1",
+                "led": "1:180",
                 "loading": []
             },
             {
@@ -400,7 +167,7 @@
                 "name": "Shoreline North/185th",
                 "lat": 47.764477,
                 "lon": -122.322731,
-                "led": "1:1",
+                "led": "1:173",
                 "loading": []
             },
             {
@@ -408,7 +175,7 @@
                 "name": "Mountlake Terrace",
                 "lat": 47.785448,
                 "lon": -122.314761,
-                "led": "1:1",
+                "led": "1:167",
                 "loading": []
             },
             {
@@ -416,7 +183,7 @@
                 "name": "Lynnwood City Center",
                 "lat": 47.815876,
                 "lon": -122.294275,
-                "led": "1:1",
+                "led": "1:160",
                 "loading": []
             }
         ]
@@ -426,13 +193,13 @@
             {
                 "code": "",
                 "name": "Lynnwood City Center",
-                "led": "2:159",
+                "led": "1:159",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:158",
+                        "led": "1:158",
                         "geometry": {
                           "coordinates": [
                             [
@@ -461,7 +228,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:157",
+                        "led": "1:157",
                         "geometry": {
                           "coordinates": [
                             [
@@ -490,7 +257,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:156",
+                        "led": "1:156",
                         "geometry": {
                           "coordinates": [
                             [
@@ -519,7 +286,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:155",
+                        "led": "1:155",
                         "geometry": {
                           "coordinates": [
                             [
@@ -552,7 +319,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:154",
+                        "led": "1:154",
                         "geometry": {
                           "coordinates": [
                             [
@@ -581,7 +348,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:153",
+                        "led": "1:153",
                         "geometry": {
                           "coordinates": [
                             [
@@ -614,13 +381,13 @@
             {
                 "code": "",
                 "name": "Mountlake Terrace",
-                "led": "2:152",
+                "led": "1:152",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:151",
+                        "led": "1:151",
                         "geometry": {
                           "coordinates": [
                             [
@@ -649,7 +416,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:150",
+                        "led": "1:150",
                         "geometry": {
                           "coordinates": [
                             [
@@ -678,7 +445,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:149",
+                        "led": "1:149",
                         "geometry": {
                           "coordinates": [
                             [
@@ -707,7 +474,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:148",
+                        "led": "1:148",
                         "geometry": {
                           "coordinates": [
                             [
@@ -736,7 +503,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:147",
+                        "led": "1:147",
                         "geometry": {
                           "coordinates": [
                             [
@@ -769,13 +536,13 @@
             {
                 "code": "",
                 "name": "Shoreline North/185th",
-                "led": "2:146",
+                "led": "1:146",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:145",
+                        "led": "1:145",
                         "geometry": {
                           "coordinates": [
                             [
@@ -804,7 +571,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:144",
+                        "led": "1:144",
                         "geometry": {
                           "coordinates": [
                             [
@@ -833,7 +600,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:143",
+                        "led": "1:143",
                         "geometry": {
                           "coordinates": [
                             [
@@ -862,7 +629,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:142",
+                        "led": "1:142",
                         "geometry": {
                           "coordinates": [
                             [
@@ -891,7 +658,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:141",
+                        "led": "1:141",
                         "geometry": {
                           "coordinates": [
                             [
@@ -920,7 +687,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:140",
+                        "led": "1:140",
                         "geometry": {
                           "coordinates": [
                             [
@@ -953,13 +720,13 @@
             {
                 "code": "",
                 "name": "Shoreline South/148th",
-                "led": "2:139",
+                "led": "1:139",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:138",
+                        "led": "1:138",
                         "geometry": {
                           "coordinates": [
                             [
@@ -988,7 +755,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:137",
+                        "led": "1:137",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1017,7 +784,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:136",
+                        "led": "1:136",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1046,7 +813,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:135",
+                        "led": "1:135",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1080,13 +847,13 @@
                 "code": "",
                 "name": "130th",
                 "disabled": true,
-                "led": "2:134",
+                "led": "1:134",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:133",
+                        "led": "1:133",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1115,7 +882,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:132",
+                        "led": "1:132",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1144,7 +911,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:131",
+                        "led": "1:131",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1173,7 +940,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:130",
+                        "led": "1:130",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1208,13 +975,13 @@
                 "name": "Northgate",
                 "lat": 47.702662,
                 "lon": -122.32832,
-                "led": "2:129",
+                "led": "1:129",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:128",
+                        "led": "1:128",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1243,7 +1010,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:127",
+                        "led": "1:127",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1272,7 +1039,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:126",
+                        "led": "1:126",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1301,7 +1068,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:125",
+                        "led": "1:125",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1330,7 +1097,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:124",
+                        "led": "1:124",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1359,7 +1126,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:123",
+                        "led": "1:123",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1394,13 +1161,13 @@
                 "name": "Roosevelt",
                 "lat": 47.676107,
                 "lon": -122.316041,
-                "led": "2:122",
+                "led": "1:122",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:121",
+                        "led": "1:121",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1429,7 +1196,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:120",
+                        "led": "1:120",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1458,7 +1225,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:119",
+                        "led": "1:119",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1487,7 +1254,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:118",
+                        "led": "1:118",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1522,13 +1289,13 @@
                 "name": "U District",
                 "lat": 47.659875,
                 "lon": -122.314194,
-                "led": "2:117",
+                "led": "1:117",
                 "loading": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:116",
+                        "led": "1:116",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1561,7 +1328,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:115",
+                        "led": "1:115",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1594,7 +1361,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:114",
+                        "led": "1:114",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1623,7 +1390,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:113",
+                        "led": "1:113",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1656,7 +1423,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:112",
+                        "led": "1:112",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1691,13 +1458,13 @@
                 "name": "Univ of Washington",
                 "lat": 47.649349,
                 "lon": -122.303795,
-                "led": "2:111",
+                "led": "1:111",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:110",
+                        "led": "1:110",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1726,7 +1493,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:109",
+                        "led": "1:109",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1755,7 +1522,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:108",
+                        "led": "1:108",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1784,7 +1551,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:107",
+                        "led": "1:107",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1813,7 +1580,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:106",
+                        "led": "1:106",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1842,7 +1609,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:105",
+                        "led": "1:105",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1877,13 +1644,13 @@
                 "name": "Capitol Hill",
                 "lat": 47.61956,
                 "lon": -122.320389,
-                "led": "2:104",
+                "led": "1:104",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:103",
+                        "led": "1:103",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1912,7 +1679,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:102",
+                        "led": "1:102",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1937,7 +1704,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:101",
+                        "led": "1:101",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1966,7 +1733,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:100",
+                        "led": "1:100",
                         "geometry": {
                           "coordinates": [
                             [
@@ -1995,7 +1762,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:99",
+                        "led": "1:99",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2026,13 +1793,13 @@
                 "name": "Westlake",
                 "lat": 47.61145,
                 "lon": -122.337532,
-                "led": "2:98",
+                "led": "1:98",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:97",
+                        "led": "1:97",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2061,7 +1828,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:96",
+                        "led": "1:96",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2094,7 +1861,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:95",
+                        "led": "1:95",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2129,13 +1896,13 @@
                 "name": "Symphony",
                 "lat": 47.607246,
                 "lon": -122.335754,
-                "led": "2:94",
+                "led": "1:94",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:93",
+                        "led": "1:93",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2164,7 +1931,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:92",
+                        "led": "1:92",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2193,7 +1960,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:91",
+                        "led": "1:91",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2228,13 +1995,13 @@
                 "name": "Pioneer Square",
                 "lat": 47.602139,
                 "lon": -122.331055,
-                "led": "2:90",
+                "led": "1:90",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:89",
+                        "led": "1:89",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2263,7 +2030,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:88",
+                        "led": "1:88",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2292,7 +2059,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:87",
+                        "led": "1:87",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2323,13 +2090,13 @@
                 "name": "Int'l Dist/Chinatown",
                 "lat": 47.59766,
                 "lon": -122.328217,
-                "led": "2:86",
+                "led": "1:86",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:85",
+                        "led": "1:85",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2358,7 +2125,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:84",
+                        "led": "1:84",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2387,7 +2154,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:83",
+                        "led": "1:83",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2416,7 +2183,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:82",
+                        "led": "1:82",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2451,13 +2218,13 @@
                 "name": "Stadium",
                 "lat": 47.591824,
                 "lon": -122.327354,
-                "led": "2:81",
+                "led": "1:81",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:80",
+                        "led": "1:80",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2486,7 +2253,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:79",
+                        "led": "1:79",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2515,7 +2282,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:78",
+                        "led": "1:78",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2550,13 +2317,13 @@
                 "name": "SODO",
                 "lat": 47.579952,
                 "lon": -122.327522,
-                "led": "2:77",
+                "led": "1:77",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:76",
+                        "led": "1:76",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2585,7 +2352,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:75",
+                        "led": "1:75",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2618,7 +2385,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:74",
+                        "led": "1:74",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2651,7 +2418,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:73",
+                        "led": "1:73",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2676,7 +2443,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:72",
+                        "led": "1:72",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2711,13 +2478,13 @@
                 "name": "Beacon Hill",
                 "lat": 47.579124,
                 "lon": -122.311279,
-                "led": "2:71",
+                "led": "1:71",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:70",
+                        "led": "1:70",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2746,7 +2513,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:69",
+                        "led": "1:69",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2775,7 +2542,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:68",
+                        "led": "1:68",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2804,7 +2571,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:67",
+                        "led": "1:67",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2833,7 +2600,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:66",
+                        "led": "1:66",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2864,13 +2631,13 @@
                 "name": "Mount Baker",
                 "lat": 47.576439,
                 "lon": -122.297737,
-                "led": "2:65",
+                "led": "1:65",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:64",
+                        "led": "1:64",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2899,7 +2666,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:63",
+                        "led": "1:63",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2928,7 +2695,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:62",
+                        "led": "1:62",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2953,7 +2720,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:61",
+                        "led": "1:61",
                         "geometry": {
                           "coordinates": [
                             [
@@ -2982,7 +2749,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:60",
+                        "led": "1:60",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3017,13 +2784,13 @@
                 "name": "Columbia City",
                 "lat": 47.559025,
                 "lon": -122.292389,
-                "led": "2:59",
+                "led": "1:59",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:58",
+                        "led": "1:58",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3052,7 +2819,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:57",
+                        "led": "1:57",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3081,7 +2848,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:56",
+                        "led": "1:56",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3110,7 +2877,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:55",
+                        "led": "1:55",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3139,7 +2906,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:54",
+                        "led": "1:54",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3168,7 +2935,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:53",
+                        "led": "1:53",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3203,13 +2970,13 @@
                 "name": "Othello",
                 "lat": 47.537529,
                 "lon": -122.281471,
-                "led": "2:52",
+                "led": "1:52",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:51",
+                        "led": "1:51",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3238,7 +3005,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:50",
+                        "led": "1:50",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3267,7 +3034,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:49",
+                        "led": "1:49",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3296,7 +3063,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:48",
+                        "led": "1:48",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3325,7 +3092,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:47",
+                        "led": "1:47",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3360,13 +3127,13 @@
                 "name": "Rainier Beach",
                 "lat": 47.522266,
                 "lon": -122.279587,
-                "led": "2:46",
+                "led": "1:46",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:45",
+                        "led": "1:45",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3395,7 +3162,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:44",
+                        "led": "1:44",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3424,7 +3191,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:43",
+                        "led": "1:43",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3453,7 +3220,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:42",
+                        "led": "1:42",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3482,7 +3249,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:41",
+                        "led": "1:41",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3511,7 +3278,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:40",
+                        "led": "1:40",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3540,7 +3307,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:39",
+                        "led": "1:39",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3569,7 +3336,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:38",
+                        "led": "1:38",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3598,7 +3365,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:37",
+                        "led": "1:37",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3627,7 +3394,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:36",
+                        "led": "1:36",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3656,7 +3423,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:35",
+                        "led": "1:35",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3691,13 +3458,13 @@
                 "name": "Tukwila Int'l Blvd",
                 "lat": 47.464272,
                 "lon": -122.288399,
-                "led": "2:34",
+                "led": "1:34",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:33",
+                        "led": "1:33",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3726,7 +3493,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:32",
+                        "led": "1:32",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3755,7 +3522,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:31",
+                        "led": "1:31",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3784,7 +3551,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:30",
+                        "led": "1:30",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3813,7 +3580,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:29",
+                        "led": "1:29",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3848,13 +3615,13 @@
                 "name": "SeaTac/Airport",
                 "lat": 47.444969,
                 "lon": -122.297028,
-                "led": "2:28",
+                "led": "1:28",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:27",
+                        "led": "1:27",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3883,7 +3650,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:26",
+                        "led": "1:26",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3912,7 +3679,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:25",
+                        "led": "1:25",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3941,7 +3708,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:24",
+                        "led": "1:24",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3970,7 +3737,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:23",
+                        "led": "1:23",
                         "geometry": {
                           "coordinates": [
                             [
@@ -3999,7 +3766,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:22",
+                        "led": "1:22",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4034,13 +3801,13 @@
                 "name": "Angle Lake",
                 "lat": 47.423122,
                 "lon": -122.297615,
-                "led": "2:21",
+                "led": "1:21",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:20",
+                        "led": "1:20",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4069,7 +3836,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:19",
+                        "led": "1:19",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4098,7 +3865,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:18",
+                        "led": "1:18",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4127,7 +3894,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:17",
+                        "led": "1:17",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4156,7 +3923,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:16",
+                        "led": "1:16",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4185,7 +3952,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:15",
+                        "led": "1:15",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4219,13 +3986,13 @@
                 "code": "",
                 "name": "Kent/Des Moines",
                 "disabled": true,
-                "led": "2:14",
+                "led": "1:14",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:13",
+                        "led": "1:13",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4254,7 +4021,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:12",
+                        "led": "1:12",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4283,7 +4050,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:11",
+                        "led": "1:11",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4312,7 +4079,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:10",
+                        "led": "1:10",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4341,7 +4108,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:9",
+                        "led": "1:9",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4375,13 +4142,13 @@
                 "code": "",
                 "name": "Star Lake",
                 "disabled": true,
-                "led": "2:8",
+                "led": "1:8",
                 "intermediaries": {
                     "type": "FeatureCollection",
                     "features": [
                       {
                         "type": "Feature",
-                        "led": "2:7",
+                        "led": "1:7",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4410,7 +4177,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:6",
+                        "led": "1:6",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4439,7 +4206,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:5",
+                        "led": "1:5",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4468,7 +4235,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:4",
+                        "led": "1:4",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4497,7 +4264,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:3",
+                        "led": "1:3",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4526,7 +4293,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:2",
+                        "led": "1:2",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4555,7 +4322,7 @@
                       },
                       {
                         "type": "Feature",
-                        "led": "2:1",
+                        "led": "1:1",
                         "geometry": {
                           "coordinates": [
                             [
@@ -4589,7 +4356,7 @@
                 "code": "",
                 "name": "Federal Way",
                 "disabled": true,
-                "led": "2:0"
+                "led": "1:0"
             },
 
 
