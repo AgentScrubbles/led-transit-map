@@ -8743,13 +8743,13 @@
           "lon": -122.133673,
           "name": "Redmond Technology"
         },
-              {
+        {
         "code": "40_E27-T1",
         "led": "",
         "lat": 47.644424,
         "lon": -122.133556,
         "name": "Redmond Technology"
-      },
+        },
         {
           "code": "40_E25-T1",
           "led": "",
@@ -8805,166 +8805,75 @@
       "direction": 0,
       "stops": [
         {
-        "code": "40_E09",
-        "led": "",
-        "lat": 47.586556,
-        "lon": -122.190396,
-        "name": "South Bellevue"
-      },
-
-      {
-        "code": "40_E11", 
-        "led": "",
-        "lat": 47.608188, 
-        "lon": -122.191147, 
-        "name": "East Main"
-      },
-      {
-        "code": "40_E11-T2",
-        "led": "",
-        "lat": 47.608403,
-        "lon": -122.191099,
-        "name": "East Main"
-      },
-      {
-        "code": "40_E15",
-        "led": "",
-        "lat": 47.615223,
-        "lon": -122.192084,
-        "name": "Bellevue Downtown"
-      },
-      {
-        "code": "40_E15-T2",
-        "led": "",
-        "lat": 47.615183,
-        "lon": -122.191303,
-        "name": "Bellevue Downtown"
-      },
-      {
-        "code": "40_E19", 
-        "led": "",
-        "lat": 47.617967, 
-        "lon": -122.183762, 
-        "name": "Wilburton"
-      },
-      {
-        "code": "40_E19-T2",
-        "led": "",
-        "lat": 47.618229,
-        "lon": -122.183687,
-        "name": "Wilburton"
-      },
-      {
-        "code": "40_E21",
-        "led": "",
-        "lat": 47.623773,
-        "lon": -122.178573,
-        "name": "Spring District"
-      },
-      {
-        "code": "40_E21-T2",
-        "led": "",
-        "lat": 47.623776,
-        "lon": -122.178239,
-        "name": "Spring District"
-      },
-      {
-        "code": "40_E23", 
-        "led": "",
-        "lat": 47.624448, 
-        "lon": -122.16564, 
-        "name": "BelRed"
-      },
-      {
-        "code": "40_E23-T2", 
-        "led": "",
-        "lat": 47.6244, 
-        "lon": -122.165224, 
-        "name": "BelRed"
-      },
-      {
-        "code": "40_E25",
-        "led": "",
-        "lat": 47.63631,
-        "lon": -122.13892,
-        "name": "Overlake Village"
-      },
-      {
-        "code": "40_E25-T2",
-        "led": "",
-        "lat": 47.636622,
-        "lon": -122.138361,
-        "name": "Overlake Village"
-      },
-
-     {
-        "code": "40_E25",
-        "led": "",
-        "lat": 47.63631,
-        "lon": -122.13892,
-        "name": "Overlake Village"
-      },
-
-     {
-        "code": "40_E23", 
-        "led": "",
-        "lat": 47.624448, 
-        "lon": -122.16564, 
-        "name": "BelRed"
-      },
-
-      {
-        "code": "40_E21",
-        "led": "",
-        "lat": 47.623773,
-        "lon": -122.178573,
-        "name": "Spring District"
-      },
-
-      {
-        "code": "40_E19", 
-        "led": "",
-        "lat": 47.617967, 
-        "lon": -122.183762, 
-        "name": "Wilburton"
-      },
-
-      {
-        "code": "40_E15",
-        "led": "",
-        "lat": 47.615223,
-        "lon": -122.192084,
-        "name": "Bellevue Downtown"
-      },
-
-      {
-        "code": "40_E11", 
-        "led": "",
-        "lat": 47.608188, 
-        "lon": -122.191147, 
-        "name": "East Main"
-      },
-      {
-        "code": "40_E27",
-        "led": "",
-        "lat": 47.644842,
-        "lon": -122.133628,
-        "name": "Redmond Technology"
-      },
-      {
-        "code": "40_E27-T1",
-        "led": "",
-        "lat": 47.644424,
-        "lon": -122.133556,
-        "name": "Redmond Technology"
-      },
-      {
-        "code": "40_E27-T2",
-        "led": "",
-        "lat": 47.645199,
-        "lon": -122.133673,
-        "name": "Redmond Technology"
-      }
+          "code": "40_E09-T1",
+          "led": "",
+          "lat": 47.586932,
+          "lon": -122.190604,
+          "name": "South Bellevue"
+        },
+        {
+          "code": "40_E09-T2",
+          "led": "",
+          "lat": 47.586932,
+          "lon": -122.190604,
+          "name": "South Bellevue"
+        },
+        {
+          "code": "40_E11-T2",
+          "led": "",
+          "lat": 47.608403,
+          "lon": -122.191099,
+          "name": "East Main"
+        },
+        {
+          "code": "40_E15-T2",
+          "led": "",
+          "lat": 47.615183,
+          "lon": -122.191303,
+          "name": "Bellevue Downtown"
+        },
+        {
+          "code": "40_E19-T2",
+          "led": "",
+          "lat": 47.618229,
+          "lon": -122.183687,
+          "name": "Wilburton"
+        },
+        {
+          "code": "40_E21-T2",
+          "led": "",
+          "lat": 47.623776,
+          "lon": -122.178239,
+          "name": "Spring District"
+        },
+        {
+          "code": "40_E23-T2", 
+          "led": "",
+          "lat": 47.6244, 
+          "lon": -122.165224, 
+          "name": "BelRed"
+        },
+        {
+          "code": "40_E25-T2",
+          "led": "",
+          "lat": 47.636622,
+          "lon": -122.138361,
+          "name": "Overlake Village"
+        },
+        {
+          "code": "40_E27-T1",
+          "led": "",
+          "lat": 47.644424,
+          "lon": -122.133556,
+          "name": "Redmond Technology"
+        },
+        {
+          "code": "40_E27-T2",
+          "led": "",
+          "lat": 47.645199,
+          "lon": -122.133673,
+          "name": "Redmond Technology"
+        }
       ]
     }]
 }
