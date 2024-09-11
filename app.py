@@ -3,8 +3,8 @@ from transit import Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
-# import board
-# import neopixel
+import board
+import neopixel
 import sqlite3
 import json
 import pprint
@@ -49,9 +49,10 @@ with open('strips.json') as json_data:
 
 strips = {
     1: {
-        'neopixel': None, #neopixel.NeoPixel(board.D18, COUNT_LED, brightness=0.1),
+        'neopixel': neopixel.NeoPixel(board.D18, 320, brightness=0.1),
         'length': 320
     }
+    # 1: neopixel.NeoPixel(board.D18, 320, brightness=0.1),
     # 2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.2, pixel_order=neopixel.GRB)
 }
 
