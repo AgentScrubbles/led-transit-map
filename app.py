@@ -32,6 +32,7 @@ agency = int(os.getenv('AGENCY_ID'))
 last_set_colors = {}
 stop_radius = 0.01
 loop_sleep = 4
+light_set_delay = 0.01
 
 light_colors = {
     LightStatus.EMPTY: 0x000000,
@@ -56,7 +57,7 @@ strips = {
         'length': 68
     },
     3: {
-        'neopixel': neopixel.NeoPixel(board.D19, 68, brightness=0.1),
+        'neopixel': neopixel.NeoPixel(board.D21, 68, brightness=0.1),
         'length': 68
     }
 }
@@ -121,6 +122,7 @@ def set_single_led(led_code: str, status_or_color):
     last_set_colors[led_code] = color
     if strip is not None:
         strip[led_index] = color
+        time.sleep(light_set_delay)
     print('\tPixel {} is set to {}'.format(led_index, color))
         
 
