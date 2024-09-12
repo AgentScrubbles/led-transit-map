@@ -253,7 +253,7 @@ def get_led_for_intermediary(stop, vehicle):
         
 
 while(True):
-
+    cls()
     vehicles_by_route = get_latest_feed()
 
     # pixels.fill((0, 0, 0))
