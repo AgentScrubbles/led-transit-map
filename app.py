@@ -3,8 +3,8 @@ from transit import Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
-import board
-import neopixel
+# import board
+# import neopixel
 import json
 import pprint
 from shapely.geometry import Polygon, Point, LinearRing
@@ -49,15 +49,15 @@ with open('strips.json') as json_data:
 
 strips = {
     1: {
-        'neopixel': neopixel.NeoPixel(board.D18, 320, brightness=0.1),
+        'neopixel': None, #neopixel.NeoPixel(board.D18, 320, brightness=0.1),
         'length': 320
     },
     2: {
-        'neopixel': neopixel.NeoPixel(board.D10, 68, brightness=0.1),
+        'neopixel': None, #neopixel.NeoPixel(board.D10, 68, brightness=0.1),
         'length': 68
     },
     3: {
-        'neopixel': neopixel.NeoPixel(board.D21, 68, brightness=0.1),
+        'neopixel': None, #neopixel.NeoPixel(board.D21, 68, brightness=0.1),
         'length': 68
     }
 }
@@ -95,8 +95,17 @@ def hex_to_rgb(hex_color):
     r = gamma_correction(r)
     g = gamma_correction(g)
     b = gamma_correction(b)
-
     return (r, g, b)
+
+def print_colored(text, hex_color):
+    # Convert hex color to RGB
+    r, g, b = hex_to_rgb(hex_color)
+    
+    # Construct ANSI escape code for RGB
+    rgb_color_code = f'\033[38;2;{r};{g};{b}m'
+    
+    # Print the text with the color
+    print(f'{rgb_color_code}{text}{Style.RESET_ALL}')
 
 def set_single_led(led_code: str, status_or_color):
 
@@ -123,7 +132,7 @@ def set_single_led(led_code: str, status_or_color):
     if strip is not None:
         strip[led_index] = color
         time.sleep(light_set_delay)
-    print('\tPixel {} is set to {}'.format(led_index, color))
+    # print('\tPixel {} is set to {}'.format(led_index, color))
         
 
 def filter_led_config_direction(arr, direction_id):
@@ -257,6 +266,10 @@ def get_led_for_intermediary(stop, vehicle):
         if is_inside:
             return intermediate.get('led')
         
+def print_vehicle_status(vehicle, is_at_stop, trip, stop, color):
+    at_message = "Stopped" if is_at_stop else "En Route"
+    direction = "↑" if trip.direction == 1 else "↓"
+    print_colored('{}|{}|{}|{}|{},{}'.format(direction, at_message, stop.get('name'), vehicle.vehicle_id, vehicle.position.lat, vehicle.position.lon), color)
 
 while(True):
     cls()
@@ -285,7 +298,7 @@ while(True):
             color = parse_color(color_raw)
             if stop is not None:
                 if vehicle_is_at_stop:
-                    print('Vehicle {} is at stop {}'.format(vehicle.vehicle_id, stop.get('name')))
+                    print_vehicle_status(vehicle, vehicle_is_at_stop, trip, stop, color)
                     set_single_led(stop.get('led'), color)
                     vehicles_set_this_iteration[stop.get('led')] = True
                 else:
@@ -313,11 +326,14 @@ while(True):
                         continue
 
                     led = get_led_for_intermediary(prev_stop_config, vehicle)
-                    print('Vehicle {} is heading to stop {} ({}, {})'.format(vehicle.vehicle_id, stop.get('name'), vehicle.position.lat, vehicle.position.lon))
+                    
                     # We know we're not at the stop, now just figure out which light to light up
                     if led is not None and led != "":
+                        print_vehicle_status(vehicle, vehicle_is_at_stop, trip, stop, color)
                         set_single_led(led, color)
                         vehicles_set_this_iteration[led] = True
+                    else:
+                        print_colored('Unknown location! Vehicle {} is heading to stop {} (direction {}) ({}, {})'.format(vehicle.vehicle_id, stop.get('name'), trip_meta.direction_id, vehicle.position.lat, vehicle.position.lon), 0xffff00)
         # clear_lights()
     route_stops = get_all_route_stops(route_short_name)
     
