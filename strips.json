@@ -1,6 +1,7 @@
 {
     "40_100479": [{
         "direction": 1,
+        "color": "00FF00",
         "stops": [
             {
               "code": "",
@@ -4368,6 +4369,7 @@
         ]
     }, {
         "direction": 0,
+        "color": "00FF00",
         "stops": [
             {
                 "code": "40_N23-T2",
@@ -8735,6 +8737,7 @@
     }],
     "40_2LINE": [{
       "direction": 1,
+      "color": "0000FF",
       "stops": [
         {
           "code": "40_E27-T2",
@@ -8803,6 +8806,7 @@
       ]
     }, {
       "direction": 0,
+      "color": "0000FF",
       "stops": [
         {
           "code": "40_E09-T1",

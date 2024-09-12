@@ -115,8 +115,6 @@ def set_single_led(led_code: str, status_or_color):
     last_set_colors[led_code] = color
     if strip is not None:
         strip[led_index] = color
-        # strip.setPixelColor(0, *strip.gamma32(neopixel.Color(color)))
-        # strip[led_index] = color
     print('\tPixel {} is set to {}'.format(led_index, color))
         
 
@@ -173,11 +171,6 @@ def hydrate_routes():
         
         hydrated_routes[route_name] = route
         route.stops = {}
-        # route_conf = led_config.get(route_name)
-        # for direction_conf in route_conf:
-        #     stops = direction_conf.get('stops')
-        #     for stop in stops:
-        #         stops_by_id[stop.get('code')] = stop
     get_trips()
 
     return hydrated_routes
@@ -227,8 +220,15 @@ def parse_color(color_str):
     color = '0x{}'.format(color_str)
     return int(color, 0)
 
+def get_route_config(route_name, direction):
+    route_config = led_config.get(route_name)
+    for direction_config in route_config:
+        if direction == direction_config.get('direction'):
+            return direction_config
+
+
 def get_route_stop_config(route_name, direction, stop_code):
-    route_config = led_config.get(route_short_name)
+    route_config = led_config.get(route_name)
     for direction_config in route_config:
         if direction == direction_config.get('direction'):
             for stop in direction_config.get('stops'):
@@ -242,8 +242,6 @@ def get_led_for_intermediary(stop, vehicle):
     for intermediate in intermediaries.get('features'):
         geometry_json = intermediate.get('geometry')
         coords = geometry_json.get('coordinates').copy()
-        # coords.append(coords[0])
-        
 
         polygon = Polygon(LinearRing(coords))
         point = Point(vehicle.position.lon, vehicle.position.lat)
@@ -256,12 +254,12 @@ while(True):
 
     vehicles_by_route = get_latest_feed()
 
-    # pixels.fill((0, 0, 0))
+    vehicles_set_this_iteration = {}
 
     for route_short_name in led_config:
         vehicles = vehicles_by_route.get(route_short_name)
 
-        vehicles_set_this_iteration = {}
+        
 
         for vehicle_item in vehicles:
             vehicle = vehicle_item.get('vehicle')
@@ -276,10 +274,13 @@ while(True):
 
             stop_bounding_area = BoundingArea.FromPoint(stop.get('lat'), stop.get('lon'), stop_radius)
             vehicle_is_at_stop = stop_bounding_area.contains(vehicle.position.lat, vehicle.position.lon)
+            route_config = get_route_config(route_short_name, trip.direction)
+            color_raw = route_config.get('color')
+            color = parse_color(color_raw)
             if stop is not None:
                 if vehicle_is_at_stop:
                     print('Vehicle {} is at stop {}'.format(vehicle.vehicle_id, stop.get('name')))
-                    set_single_led(stop.get('led'), parse_color(route.color))
+                    set_single_led(stop.get('led'), color)
                     vehicles_set_this_iteration[stop.get('led')] = True
                 else:
 
@@ -309,7 +310,7 @@ while(True):
                     print('Vehicle {} is heading to stop {} ({}, {})'.format(vehicle.vehicle_id, stop.get('name'), vehicle.position.lat, vehicle.position.lon))
                     # We know we're not at the stop, now just figure out which light to light up
                     if led is not None and led != "":
-                        set_single_led(led, parse_color(route.color))
+                        set_single_led(led, color)
                         vehicles_set_this_iteration[led] = True
         # clear_lights()
     route_stops = get_all_route_stops(route_short_name)
