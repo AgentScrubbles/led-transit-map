@@ -3,8 +3,8 @@ from transit import Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
-# import board
-# import neopixel
+import board
+import neopixel
 import json
 import pprint
 from shapely.geometry import Polygon, Point, LinearRing
@@ -49,15 +49,15 @@ with open('strips.json') as json_data:
 
 strips = {
     1: {
-        'neopixel': None, #neopixel.NeoPixel(board.D18, 320, brightness=0.1),
+        'neopixel': neopixel.NeoPixel(board.D18, 320, brightness=0.1),
         'length': 320
     },
     2: {
-        'neopixel': None, #neopixel.NeoPixel(board.D10, 68, brightness=0.1),
+        'neopixel': neopixel.NeoPixel(board.D10, 68, brightness=0.1),
         'length': 68
     },
     3: {
-        'neopixel': None, #neopixel.NeoPixel(board.D21, 68, brightness=0.1),
+        'neopixel': neopixel.NeoPixel(board.D21, 68, brightness=0.1),
         'length': 68
     }
 }
