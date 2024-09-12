@@ -8740,67 +8740,91 @@
       "color": "0000FF",
       "stops": [
         {
+          "code": "",
+          "led": "2:0",
+          "name": "Downtown Redmond",
+          "disabled": true
+        },
+        {
+          "code": "",
+          "led": "2:5",
+          "name": "Marymoor Park",
+          "disabled": true
+        },
+        {
           "code": "40_E27-T2",
-          "led": "",
+          "led": "2:10",
           "lat": 47.645199,
           "lon": -122.133673,
           "name": "Redmond Technology"
         },
         {
         "code": "40_E27-T1",
-        "led": "",
+        "led": "2:10",
         "lat": 47.644424,
         "lon": -122.133556,
         "name": "Redmond Technology"
         },
         {
           "code": "40_E25-T1",
-          "led": "",
+          "led": "2:16",
           "lat": 47.636151,
           "lon": -122.139236,
           "name": "Overlake Village"
         },
         {  
           "code": "40_E23-T1", 
-          "led": "",
+          "led": "2:22",
           "lat": 47.624499, 
           "lon": -122.166364, 
           "name": "BelRed"
         },
         {
           "code": "40_E21-T1",
-          "led": "",
+          "led": "2:26",
           "lat": 47.623772,
           "lon": -122.178901,
           "name": "Spring District"
         },
         {
           "code": "40_E19-T1",
-          "led": "",
+          "led": "2:30",
           "lat": 47.617909,
           "lon": -122.183806,
           "name": "Wilburton"
         },
         {
           "code": "40_E15-T1",
-          "led": "",
+          "led": "2:34",
           "lat": 47.615285,
           "lon": -122.192531,
           "name": "Bellevue Downtown"
         },
         {
           "code": "40_E11-T1",
-          "led": "",
+          "led": "2:39",
           "lat": 47.607707,
           "lon": -122.191202,
           "name": "East Main"
         },
         {
           "code": "40_E09-T2",
-          "led": "",
+          "led": "2:45",
           "lat": 47.586932,
           "lon": -122.190604,
           "name": "South Bellevue"
+        },
+        {
+          "code": "",
+          "led": "2:53",
+          "name": "Mercer Island",
+          "disabled": true
+        },
+        {
+          "code": "",
+          "led": "2:62",
+          "name": "Judkins Park",
+          "disabled": true
         }
 
       ]
@@ -8809,74 +8833,98 @@
       "color": "0000FF",
       "stops": [
         {
+          "code": "",
+          "led": "3:62",
+          "name": "Judkins Park",
+          "disabled": true
+        },
+        {
+          "code": "",
+          "led": "3:53",
+          "name": "Mercer Island",
+          "disabled": true
+        },
+        {
           "code": "40_E09-T1",
-          "led": "",
+          "led": "3:45",
           "lat": 47.586932,
           "lon": -122.190604,
           "name": "South Bellevue"
         },
         {
           "code": "40_E09-T2",
-          "led": "",
+          "led": "3:45",
           "lat": 47.586932,
           "lon": -122.190604,
           "name": "South Bellevue"
         },
         {
           "code": "40_E11-T2",
-          "led": "",
+          "led": "3:39",
           "lat": 47.608403,
           "lon": -122.191099,
           "name": "East Main"
         },
         {
           "code": "40_E15-T2",
-          "led": "",
+          "led": "3:34",
           "lat": 47.615183,
           "lon": -122.191303,
           "name": "Bellevue Downtown"
         },
         {
           "code": "40_E19-T2",
-          "led": "",
+          "led": "3:30",
           "lat": 47.618229,
           "lon": -122.183687,
           "name": "Wilburton"
         },
         {
           "code": "40_E21-T2",
-          "led": "",
+          "led": "3:26",
           "lat": 47.623776,
           "lon": -122.178239,
           "name": "Spring District"
         },
         {
           "code": "40_E23-T2", 
-          "led": "",
+          "led": "3:22",
           "lat": 47.6244, 
           "lon": -122.165224, 
           "name": "BelRed"
         },
         {
           "code": "40_E25-T2",
-          "led": "",
+          "led": "3:16",
           "lat": 47.636622,
           "lon": -122.138361,
           "name": "Overlake Village"
         },
         {
           "code": "40_E27-T1",
-          "led": "",
+          "led": "3:10",
           "lat": 47.644424,
           "lon": -122.133556,
           "name": "Redmond Technology"
         },
         {
           "code": "40_E27-T2",
-          "led": "",
+          "led": "3:10",
           "lat": 47.645199,
           "lon": -122.133673,
           "name": "Redmond Technology"
+        },
+        {
+          "code": "",
+          "led": "3:5",
+          "name": "Marymoor Park",
+          "disabled": true
+        },
+        {
+          "code": "",
+          "led": "3:0",
+          "name": "Downtown Redmond",
+          "disabled": true
         }
       ]
     }]

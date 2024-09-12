@@ -50,9 +50,15 @@ strips = {
     1: {
         'neopixel': neopixel.NeoPixel(board.D18, 320, brightness=0.1),
         'length': 320
+    },
+    2: {
+        'neopixel': neopixel.NeoPixel(board.D10, 68, brightness=0.1),
+        'length': 68
+    },
+    3: {
+        'neopixel': neopixel.NeoPixel(board.D19, 68, brightness=0.1),
+        'length': 68
     }
-    # 1: neopixel.NeoPixel(board.D18, 320, brightness=0.1),
-    # 2: neopixel.NeoPixel(board.D10, COUNT_LED, brightness=0.2, pixel_order=neopixel.GRB)
 }
 
 # HELPER METHODS
