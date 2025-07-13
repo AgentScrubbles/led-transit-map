@@ -4588,6 +4588,8 @@
           "code": "40_E31-T2",
           "led": "2:0",
           "name": "Downtown Redmond",
+          "lat": 47.6695651,
+          "lon": -122.117281,
           "intermediaries": {
             "type": "FeatureCollection",
             "features": [
@@ -4661,6 +4663,8 @@
           "code": "40_E31-T1",
           "led": "2:0",
           "name": "Downtown Redmond",
+          "lat": 47.6695651,
+          "lon": -122.117281,
           "intermediaries": {
             "type": "FeatureCollection",
             "features": [
@@ -4734,6 +4738,8 @@
           "code": "40_E29-T1",
           "led": "2:5",
           "name": "Marymoor Park",
+          "lat": 47.6669929,
+          "lon": -122.1054149,
           "intermediaries": {
             "type": "FeatureCollection",
             "features": [
