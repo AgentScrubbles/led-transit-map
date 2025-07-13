@@ -293,6 +293,9 @@ while(True):
             if stop is None:
                 print('WARN Stop {} was not found in config, direction {}'.format(next_stop_id, trip.direction))
                 continue
+            if (stop.get('lat') is None) or (stop.get('lon') is None):
+                print(f'WARN: Stop {stop.get("code")} has malformatted config, direction {trip.direction}')
+
 
             stop_bounding_area = BoundingArea.FromPoint(stop.get('lat'), stop.get('lon'), stop_radius)
             vehicle_is_at_stop = stop_bounding_area.contains(vehicle.position.lat, vehicle.position.lon)
