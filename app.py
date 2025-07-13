@@ -129,6 +129,8 @@ def set_single_led(led_code: str, status_or_color):
     if (last_color is None):
         last_color = 0x000000
     last_set_colors[led_code] = color
+    if strip_index == 2:
+        print('{} is being set to {}'.format(led_code, color))
     if strip is not None:
         strip[led_index] = color
         time.sleep(light_set_delay)
@@ -275,13 +277,14 @@ while(True):
     cls()
     vehicles_by_route = get_latest_feed()
 
-    # pixels.fill((0, 0, 0))
     vehicles_set_this_iteration = {}
     for route_short_name in led_config:
         vehicles = vehicles_by_route.get(route_short_name)
 
         for vehicle_item in vehicles:
             vehicle = vehicle_item.get('vehicle')
+            if (vehicle is None):
+                continue
             route: Route = vehicle_item.get('route')
             trip = vehicle_item.get('trip')
             next_stop_id = vehicle.next_stop
