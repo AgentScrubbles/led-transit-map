@@ -4,10 +4,22 @@ from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
 import time
 import board
-import neopixel
 import json
-import pprint
 from shapely.geometry import Polygon, Point, LinearRing
+
+try:
+    import board
+    import neopixel
+    NEOPIXEL_AVAILABLE = True
+except Exception:
+    NEOPIXEL_AVAILABLE = False
+    # Simple shim so code referring to board.D18 still works
+    class _FakeBoard:
+        D18 = None
+        D10 = None
+        D21 = None
+
+    board = _FakeBoard()
 
 from onebusaway import OnebusawaySDK
 from dotenv import main
@@ -47,17 +59,23 @@ light_colors = {
 with open('strips.json') as json_data:
     led_config = json.load(json_data)
 
+def make_strip(pin, length, brightness=0.1):
+    if NEOPIXEL_AVAILABLE:
+        return neopixel.NeoPixel(pin, length, brightness=brightness)
+    else:
+        return None  # or a fake stub class
+
 strips = {
     1: {
-        'neopixel': neopixel.NeoPixel(board.D18, 320, brightness=0.1),
+        'neopixel': make_strip(board.D18, 320),
         'length': 320
     },
     2: {
-        'neopixel': neopixel.NeoPixel(board.D10, 68, brightness=0.1),
+        'neopixel': make_strip(board.D10, 68),
         'length': 68
     },
     3: {
-        'neopixel': neopixel.NeoPixel(board.D21, 68, brightness=0.1),
+        'neopixel': make_strip(board.D21, 68),
         'length': 68
     }
 }
