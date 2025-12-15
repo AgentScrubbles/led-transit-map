@@ -1,0 +1,1 @@
+This codebase contains an application which tracks public transit trains and sets LED lights on a light strip, as a moving art project. Explore the documentation and then the code. Bring yourself up to a senior software engineer level with some electrical knowledge. Once you are comortable, let me know and I'll give you a task.

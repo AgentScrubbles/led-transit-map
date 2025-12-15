@@ -2,24 +2,46 @@
 from transit import Route, Vehicle, Stop, Trip
 from strip_config import LightStop, StripConfig, LightStatus, BoundingArea
 import os
+import sys
 import time
-import board
+import argparse
 import json
 from shapely.geometry import Polygon, Point, LinearRing
 
-try:
-    import board
-    import neopixel
-    NEOPIXEL_AVAILABLE = True
-except Exception:
-    NEOPIXEL_AVAILABLE = False
-    # Simple shim so code referring to board.D18 still works
-    class _FakeBoard:
-        D18 = None
-        D10 = None
-        D21 = None
+# Parse command line arguments early
+parser = argparse.ArgumentParser(description='LED Transit Map')
+parser.add_argument('--debug', action='store_true',
+                    help='Run in debug mode with terminal visualization (no hardware required)')
+args = parser.parse_args()
 
+DEBUG_MODE = args.debug or os.getenv('LED_DEBUG', '').lower() in ('1', 'true', 'yes')
+
+if DEBUG_MODE:
+    print("Running in DEBUG MODE - using terminal visualizer")
+    from led_visualizer import create_fake_strip, render as render_leds
+    NEOPIXEL_AVAILABLE = False
+
+    class _FakeBoard:
+        D18 = "D18"
+        D10 = "D10"
+        D21 = "D21"
+
+    import board
     board = _FakeBoard()
+else:
+    try:
+        import board
+        import neopixel
+        NEOPIXEL_AVAILABLE = True
+    except Exception:
+        NEOPIXEL_AVAILABLE = False
+        # Simple shim so code referring to board.D18 still works
+        class _FakeBoard:
+            D18 = None
+            D10 = None
+            D21 = None
+
+        board = _FakeBoard()
 
 from onebusaway import OnebusawaySDK
 from dotenv import main
@@ -27,6 +49,26 @@ from dotenv import main
 from colorama import init as colorama_init
 from colorama import Fore
 from colorama import Style
+
+
+def api_call_with_retry(api_func, *args, max_retries=3, retry_delay=2, **kwargs):
+    """
+    Wrapper for API calls that retries on failure.
+    Returns None if all retries fail.
+    """
+    for attempt in range(max_retries):
+        try:
+            result = api_func(*args, **kwargs)
+            if result is not None:
+                return result
+            print(f"{Fore.YELLOW}API returned None, attempt {attempt + 1}/{max_retries}{Style.RESET_ALL}")
+        except Exception as e:
+            print(f"{Fore.RED}API call failed (attempt {attempt + 1}/{max_retries}): {e}{Style.RESET_ALL}")
+
+        if attempt < max_retries - 1:
+            time.sleep(retry_delay * (attempt + 1))  # Exponential backoff
+
+    return None
 
 
 # PACKAGE SETUP
@@ -60,10 +102,12 @@ with open('strips.json') as json_data:
     led_config = json.load(json_data)
 
 def make_strip(pin, length, brightness=0.1):
-    if NEOPIXEL_AVAILABLE:
+    if DEBUG_MODE:
+        return create_fake_strip(pin, length, brightness=brightness)
+    elif NEOPIXEL_AVAILABLE:
         return neopixel.NeoPixel(pin, length, brightness=brightness)
     else:
-        return None  # or a fake stub class
+        return None
 
 strips = {
     1: {
@@ -193,9 +237,18 @@ all_route_trips_by_id = {}
 stops_by_id = {}
 config_stops = {}
 
-def get_trips():     
-    for route_name in led_config:   
-        trips = client.trips_for_route.list(route_name, include_schedule=True, include_status=True).data.references.trips
+def get_trips():
+    for route_name in led_config:
+        result = api_call_with_retry(
+            client.trips_for_route.list,
+            route_name,
+            include_schedule=True,
+            include_status=True
+        )
+        if result is None or result.data is None:
+            print(f"{Fore.RED}Failed to get trips for route {route_name} after retries{Style.RESET_ALL}")
+            continue
+        trips = result.data.references.trips
         for trip in trips:
             all_route_trips_by_id[trip.id] = trip
 
@@ -204,25 +257,56 @@ def get_trips():
 def hydrate_routes():
     hydrated_routes = {}
     for route_name in led_config:
-        route = client.route.retrieve(route_name).data.entry
-        
+        result = api_call_with_retry(client.route.retrieve, route_name)
+        if result is None or result.data is None:
+            print(f"{Fore.RED}Failed to get route info for {route_name} after retries{Style.RESET_ALL}")
+            continue
+
+        route = result.data.entry
         hydrated_routes[route_name] = route
         route.stops = {}
     get_trips()
 
     return hydrated_routes
 
-routes_by_id = hydrate_routes()
+
+def initialize_with_retry(max_attempts=5, retry_delay=10):
+    """
+    Try to initialize routes with retries.
+    If API is temporarily down, wait and retry instead of crashing.
+    """
+    for attempt in range(max_attempts):
+        routes = hydrate_routes()
+        if routes:
+            return routes
+        print(f"{Fore.YELLOW}No routes loaded, retrying initialization ({attempt + 1}/{max_attempts})...{Style.RESET_ALL}")
+        time.sleep(retry_delay)
+
+    print(f"{Fore.RED}Failed to initialize routes after {max_attempts} attempts. Exiting.{Style.RESET_ALL}")
+    raise SystemExit(1)
+
+
+routes_by_id = initialize_with_retry()
 trips_by_id = {}
 clear_lights()
 
 def get_latest_feed():
     trips_by_id.clear()
     vehicles_by_route = {}
-    
+
     for idx, route_id in enumerate(routes_by_id):
         routes_by_id[route_id].trips = {}
-        route_trips_result = client.trips_for_route.list(route_id, include_status=True, include_schedule=True)
+        route_trips_result = api_call_with_retry(
+            client.trips_for_route.list,
+            route_id,
+            include_status=True,
+            include_schedule=True
+        )
+        if route_trips_result is None or route_trips_result.data is None:
+            print(f"{Fore.YELLOW}Skipping route {route_id} - API call failed{Style.RESET_ALL}")
+            vehicles_by_route[route_id] = []
+            continue
+
         route_trips = route_trips_result.data.list
         trip_lookup = {}
         for trip in route_trips_result.data.references.trips:
@@ -292,7 +376,8 @@ def print_vehicle_status(vehicle, is_at_stop, trip, stop, color):
     print_colored('{}|{}|{}|{}|{},{}'.format(direction, at_message, stop.get('name'), vehicle.vehicle_id, vehicle.position.lat, vehicle.position.lon), color)
 
 while(True):
-    cls()
+    if not DEBUG_MODE:
+        cls()
     vehicles_by_route = get_latest_feed()
 
     vehicles_set_this_iteration = {}
@@ -386,6 +471,8 @@ while(True):
                 else:
                     set_single_led(led, LightStatus.STATION)
 
+    if DEBUG_MODE:
+        render_leds()
 
     time.sleep(loop_sleep)
 
