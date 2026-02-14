@@ -5227,6 +5227,13 @@
           "name": "South Bellevue"
         },
         {
+          "code": "40_E09-T1",
+          "led": "2:45",
+          "lat": 47.586932,
+          "lon": -122.190604,
+          "name": "South Bellevue"
+        },
+        {
           "code": "",
           "led": "2:53",
           "name": "Mercer Island",
